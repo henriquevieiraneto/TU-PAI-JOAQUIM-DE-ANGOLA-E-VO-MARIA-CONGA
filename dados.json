@@ -2,29 +2,29 @@
   "mediuns": [
     {
       "nome": "CAROLINA",
-      "cargo": "M�e Pequena",
-      "entidade": "N�o informada",
+      "cargo": "Mãe Pequena",
+      "entidade": "Não informada",
       "foto": "../img/altar.jpg"
     },
     {
       "nome": "ALBERTO",
-      "cargo": "Babalorixá",
+      "cargo": "BabalorixÃ¡",
       "entidade": "Pai Joaquim de Angola",
-      "orixa": "Iansã e Omolu",
+      "orixa": "IansÃ£ e Omolu",
       "foto": "../img/alberto.jpg"
     },
     {
       "nome": "ANA",
-      "cargo": "Babalorixá",
-      "entidade": "Vó Maria Conga",
-      "orixa": "Ogum e Iemanjá",
+      "cargo": "BabalorixÃ¡",
+      "entidade": "VÃ³ Maria Conga",
+      "orixa": "Ogum e IemanjÃ¡",
       "foto": "../img/ana.jpg"
     },
     {
       "nome": "HENRIQUE VIEIRA NETO",
       "cargo": "Medium em Desenvolvimento",
       "entidade": "Desconhecida",
-      "orixa": "IansÃ£",
+      "orixa": "IansÃƒÂ£",
       "foto": "../img/altar.jpg"
     }
   ]
