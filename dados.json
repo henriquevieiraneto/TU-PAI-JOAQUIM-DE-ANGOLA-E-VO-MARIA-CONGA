@@ -2,22 +2,22 @@
   "mediuns": [
     {
       "nome": "ALBERTO",
-      "cargo": "Babalorix√°",
+      "cargo": "Babalorix·",
       "entidade": "Pai Joaquim de Angola",
       "foto": "../img/alberto.jpg"
     },
     {
       "nome": "ANA",
-      "cargo": "Babalorix√°",
-      "entidade": "V√≥ Maria Conga",
+      "cargo": "Babalorix·",
+      "entidade": "VÛ Maria Conga",
       "foto": "../img/ana.jpg"
     },
     {
       "nome": "HENRIQUE VIEIRA NETO",
       "cargo": "MÈdium em Desenvolvimento",
       "entidade": "Desconhecida",
-      "orixa": "Ians„",
-      "foto": "../img/alberto.jpg"
+      "orixa": "Ians√£",
+      "foto": "../img/henrique.jpg"
     }
   ]
 }
