@@ -2,148 +2,158 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Painel Admin | TU Pai Joaquim</title>
+    <title>Painel Master | TU Pai Joaquim</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .admin-box { background: var(--glass); padding: 30px; border-radius: 20px; border: 1px solid var(--glass-border); margin-top: 20px; max-width: 500px; margin-inline: auto; }
-        input { width: 100%; padding: 12px; margin: 10px 0; background: #111; border: 1px solid #333; color: white; border-radius: 8px; }
-        .btn-save { background: var(--primary-neon); color: black; font-weight: bold; cursor: pointer; border: none; padding: 15px; width: 100%; border-radius: 8px; margin-top: 20px; }
-        #log { margin-top: 20px; font-size: 0.8rem; color: var(--gold); text-align: center; }
-        .hidden { display: none; }
-        label { font-size: 0.8rem; color: var(--primary-neon); display: block; margin-top: 10px; text-align: left; }
+        .admin-box { background: var(--glass); padding: 25px; border-radius: 15px; border: 1px solid var(--glass-border); margin-bottom: 20px; }
+        .card-edit { border-left: 5px solid var(--primary-neon); background: rgba(0,0,0,0.3); position: relative; }
+        input { width: 100%; padding: 10px; margin: 5px 0 15px 0; background: #000; border: 1px solid #333; color: white; border-radius: 5px; }
+        .btn { padding: 12px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; width: 100%; }
+        .btn-add { background: var(--primary-neon); color: black; margin-bottom: 20px; }
+        .btn-save { background: #28a745; color: white; font-size: 1.2rem; position: sticky; top: 10px; z-index: 100; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .btn-del { background: #dc3545; color: white; width: auto; padding: 5px 15px; font-size: 0.7rem; }
+        label { font-size: 0.7rem; color: var(--primary-neon); text-transform: uppercase; letter-spacing: 1px; }
+        #log { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); padding: 10px 20px; background: var(--primary-neon); color: black; border-radius: 20px; display: none; font-weight: bold; z-index: 1000; }
     </style>
 </head>
 <body>
-    <header><h1>GESTÃO DO PORTAL</h1></header>
+    <header><h1>GESTÃO DO CORPO MEDIÚNICO</h1></header>
     <main class="container">
         
-        <div id="step-1" class="admin-box">
-            <h3>Acesso ao Perfil</h3>
-            <input type="text" id="loginNome" placeholder="Nome Completo">
-            <input type="password" id="loginSenha" placeholder="Senha">
-            <p style="font-size: 0.7rem; color: #666; margin-top: 10px;">Na primeira vez, será solicitado o Token de Conexão.</p>
-            <button class="btn-save" onclick="autenticar()">ENTRAR</button>
+        <div id="login-screen" class="admin-box" style="max-width: 400px; margin: auto;">
+            <input type="text" id="user" placeholder="Nome Completo">
+            <input type="password" id="pass" placeholder="Senha">
+            <button class="btn btn-add" onclick="login()">ENTRAR NO SISTEMA</button>
         </div>
 
-        <div id="step-2" class="admin-box hidden">
-            <h3 id="boasVindas">Olá, </h3>
-            
-            <label>Cargo ou Função:</label>
-            <input type="text" id="editCargo">
-            
-            <label>Entidade Principal:</label>
-            <input type="text" id="editEntidade">
-
-            <label>Orixá de Frente:</label>
-            <input type="text" id="editOrixa">
-
-            <button class="btn-save" onclick="salvarNoGithub()">ATUALIZAR MEU PERFIL</button>
-            <button onclick="limparChave()" style="background:none; border:none; color:grey; cursor:pointer; margin-top:20px; width:100%; font-size: 0.7rem;">DESLOGAR E LIMPAR CHAVE</button>
+        <div id="main-screen" class="hidden" style="display:none;">
+            <button class="btn btn-save" onclick="enviarParaGithub()">💾 SALVAR TODAS AS ALTERAÇÕES NO SITE</button>
+            <button class="btn btn-add" onclick="adicionarNovo()">+ ADICIONAR NOVO IRMÃO/IRMÃ</button>
+            <div id="lista-edicao"></div>
         </div>
-        
-        <div id="log"></div>
     </main>
 
+    <div id="log">Processando...</div>
+
     <script>
-        const CONFIG = {
+        const REPO_INFO = {
             owner: 'henriquevieiraneto',
             repo: 'TU-PAI-JOAQUIM-DE-ANGOLA-E-VO-MARIA-CONGA',
             path: 'dados.json'
         };
 
-        let db = null;
-        let userIdx = -1;
+        let db = { mediuns: [] };
+        let currentSha = "";
 
-        // Recupera o token salvo no navegador ou pede um novo
-        function obterToken() {
-            let token = localStorage.getItem('gh_token');
-            if (!token) {
-                token = prompt("Por favor, insira o Token de Conexão do GitHub:");
-                if (token) localStorage.setItem('gh_token', token);
-            }
-            return token;
+        function status(msg, tempo = 3000) {
+            const l = document.getElementById('log');
+            l.innerText = msg;
+            l.style.display = 'block';
+            if(tempo > 0) setTimeout(() => l.style.display = 'none', tempo);
         }
 
-        function limparChave() {
-            localStorage.removeItem('gh_token');
-            location.reload();
-        }
+        async function login() {
+            const u = document.getElementById('user').value;
+            const p = document.getElementById('pass').value;
 
-        async function autenticar() {
-            const nome = document.getElementById('loginNome').value.trim();
-            const senha = document.getElementById('loginSenha').value;
-
-            if (nome === "Henrique Vieira Neto" && senha === "@Hvn2009") {
-                carregar(nome);
+            if (u === "Henrique Vieira Neto" && p === "@Hvn2009") {
+                await inicializarDados();
             } else {
-                alert("Acesso negado.");
+                alert("Credenciais incorretas.");
             }
         }
 
-        async function carregar(nomeBusca) {
-            const log = document.getElementById('log');
-            const token = obterToken();
-            if(!token) return;
+        async function inicializarDados() {
+            let t = localStorage.getItem('gh_token');
+            if(!t) {
+                t = prompt("Digite seu GitHub Token para prosseguir:");
+                if(t) localStorage.setItem('gh_token', t);
+                else return;
+            }
 
-            log.innerText = "⏳ Conectando...";
-            
+            status("⏳ Carregando dados do servidor...");
             try {
-                const res = await fetch(`https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/${CONFIG.path}`, {
-                    headers: { 'Authorization': `token ${token}` }
+                const res = await fetch(`https://api.github.com/repos/${REPO_INFO.owner}/${REPO_INFO.repo}/contents/${REPO_INFO.path}`, {
+                    headers: { 'Authorization': `token ${t}` }
                 });
-                
-                if(!res.ok) throw new Error("Token inválido ou erro de conexão.");
-
                 const data = await res.json();
+                currentSha = data.sha;
                 db = JSON.parse(atob(data.content));
-                db.sha = data.sha;
-
-                userIdx = db.mediuns.findIndex(m => m.nome.toUpperCase() === nomeBusca.toUpperCase());
                 
-                if(userIdx === -1 && nomeBusca === "Henrique Vieira Neto") {
-                    db.mediuns.push({ nome: nomeBusca.toUpperCase(), cargo: "", entidade: "", orixa: "", foto: "../img/alberto.jpg" });
-                    userIdx = db.mediuns.length - 1;
-                }
-
-                document.getElementById('step-1').classList.add('hidden');
-                document.getElementById('step-2').classList.remove('hidden');
-                document.getElementById('boasVindas').innerText = "Olá, " + nomeBusca;
-                
-                const u = db.mediuns[userIdx];
-                document.getElementById('editCargo').value = u.cargo || "";
-                document.getElementById('editEntidade').value = u.entidade || "";
-                document.getElementById('editOrixa').value = u.orixa || "";
-                log.innerText = "";
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('main-screen').style.display = 'block';
+                render();
+                status("✅ Dados carregados.");
             } catch (e) {
-                log.innerText = "❌ Erro: " + e.message;
-                localStorage.removeItem('gh_token'); // Limpa se estiver errado
+                alert("Erro de conexão. Verifique o Token.");
+                localStorage.removeItem('gh_token');
             }
         }
 
-        async function salvarNoGithub() {
-            const log = document.getElementById('log');
-            const token = localStorage.getItem('gh_token');
-            log.innerText = "⏳ Sincronizando...";
+        function render() {
+            const cont = document.getElementById('lista-edicao');
+            cont.innerHTML = "";
+            db.mediuns.forEach((m, i) => {
+                const item = document.createElement('div');
+                item.className = 'admin-box card-edit';
+                item.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                        <strong>MÉDIUM #${i+1}</strong>
+                        <button class="btn btn-del" onclick="remover(${i})">REMOVER</button>
+                    </div>
+                    <label>Nome Completo</label>
+                    <input type="text" value="${m.nome}" oninput="db.mediuns[${i}].nome = this.value.toUpperCase()">
+                    
+                    <label>Cargo/Função</label>
+                    <input type="text" value="${m.cargo}" oninput="db.mediuns[${i}].cargo = this.value">
+                    
+                    <label>Entidade Principal</label>
+                    <input type="text" value="${m.entidade}" oninput="db.mediuns[${i}].entidade = this.value">
+                    
+                    <label>Caminho da Foto (Ex: ../img/nome.jpg)</label>
+                    <input type="text" value="${m.foto}" oninput="db.mediuns[${i}].foto = this.value">
+                `;
+                cont.appendChild(item);
+            });
+        }
 
-            db.mediuns[userIdx].cargo = document.getElementById('editCargo').value;
-            db.mediuns[userIdx].entidade = document.getElementById('editEntidade').value;
-            db.mediuns[userIdx].orixa = document.getElementById('editOrixa').value;
+        function adicionarNovo() {
+            db.mediuns.unshift({ nome: "NOVO MÉDIUM", cargo: "", entidade: "", foto: "../img/default.jpg" });
+            render();
+            window.scrollTo(0, 0);
+        }
+
+        function remover(i) {
+            if(confirm(`Excluir ${db.mediuns[i].nome}?`)) {
+                db.mediuns.splice(i, 1);
+                render();
+            }
+        }
+
+        async function enviarParaGithub() {
+            const t = localStorage.getItem('gh_token');
+            status("⏳ Sincronizando com GitHub...", 0);
 
             try {
-                const res = await fetch(`https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/${CONFIG.path}`, {
+                const res = await fetch(`https://api.github.com/repos/${REPO_INFO.owner}/${REPO_INFO.repo}/contents/${REPO_INFO.path}`, {
                     method: 'PUT',
-                    headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
+                    headers: { 'Authorization': `token ${t}`, 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        message: `Update perfil: ${db.mediuns[userIdx].nome}`,
-                        content: btoa(JSON.stringify({ mediuns: db.mediuns }, null, 2)),
-                        sha: db.sha
+                        message: "Atualização via Painel Master",
+                        content: btoa(JSON.stringify(db, null, 2)),
+                        sha: currentSha
                     })
                 });
 
-                if(res.ok) log.innerText = "✅ Perfil atualizado com sucesso!";
-                else log.innerText = "❌ Erro ao salvar.";
-            } catch (err) {
-                log.innerText = "❌ Erro de conexão.";
+                if(res.ok) {
+                    const resData = await res.json();
+                    currentSha = resData.content.sha;
+                    status("✅ SITE ATUALIZADO COM SUCESSO!");
+                } else {
+                    throw new Error();
+                }
+            } catch (e) {
+                alert("Erro ao salvar. Verifique se o Token ainda é válido.");
             }
         }
     </script>
