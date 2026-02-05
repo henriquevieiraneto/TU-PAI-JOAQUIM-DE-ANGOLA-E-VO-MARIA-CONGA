@@ -11,6 +11,13 @@
       "cargo": "Babalorixá",
       "entidade": "Vó Maria Conga",
       "foto": "../img/ana.jpg"
+    },
+    {
+      "nome": "HENRIQUE VIEIRA NETO",
+      "cargo": "Indefinida",
+      "entidade": "Indefinida",
+      "orixa": "Indefinida",
+      "foto": "../img/alberto.jpg"
     }
   ]
 }
