@@ -1,6 +1,12 @@
 {
   "mediuns": [
     {
+      "nome": "KARINA",
+      "cargo": "M�e Pequena",
+      "entidade": "Esquerda",
+      "foto": "../img/altar.jpg"
+    },
+    {
       "nome": "CAROLINA",
       "cargo": "Mãe Pequena",
       "entidade": "Não informada",
