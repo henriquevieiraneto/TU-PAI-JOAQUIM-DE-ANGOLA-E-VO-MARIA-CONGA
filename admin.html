@@ -2,34 +2,49 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel Master | TU Pai Joaquim</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .admin-box { background: var(--glass); padding: 25px; border-radius: 15px; border: 1px solid var(--glass-border); margin-bottom: 20px; }
-        .card-edit { border-left: 5px solid var(--primary-neon); background: rgba(0,0,0,0.3); position: relative; }
-        input { width: 100%; padding: 10px; margin: 5px 0 15px 0; background: #000; border: 1px solid #333; color: white; border-radius: 5px; }
-        .btn { padding: 12px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; width: 100%; }
+        .admin-box { background: var(--glass); padding: 25px; border-radius: 15px; border: 1px solid var(--glass-border); margin-bottom: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+        .card-edit { border-left: 5px solid var(--primary-neon); background: rgba(0,0,0,0.4); }
+        input { width: 100%; padding: 12px; margin: 5px 0 15px 0; background: #000; border: 1px solid #333; color: #fff; border-radius: 8px; font-family: inherit; }
+        input:focus { border-color: var(--primary-neon); outline: none; }
+        .btn { padding: 15px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.3s; font-family: inherit; }
         .btn-add { background: var(--primary-neon); color: black; margin-bottom: 20px; }
-        .btn-save { background: #28a745; color: white; font-size: 1.2rem; position: sticky; top: 10px; z-index: 100; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        .btn-del { background: #dc3545; color: white; width: auto; padding: 5px 15px; font-size: 0.7rem; }
-        label { font-size: 0.7rem; color: var(--primary-neon); text-transform: uppercase; letter-spacing: 1px; }
-        #log { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); padding: 10px 20px; background: var(--primary-neon); color: black; border-radius: 20px; display: none; font-weight: bold; z-index: 1000; }
+        .btn-add:hover { filter: brightness(1.2); }
+        .btn-save { background: #28a745; color: white; font-size: 1.1rem; position: sticky; top: 10px; z-index: 100; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .btn-save:hover { background: #218838; }
+        .btn-del { background: #dc3545; color: white; width: auto; padding: 8px 15px; font-size: 0.7rem; float: right; }
+        label { font-size: 0.7rem; color: var(--primary-neon); text-transform: uppercase; letter-spacing: 1px; font-weight: bold; }
+        #log { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); padding: 12px 25px; background: var(--primary-neon); color: black; border-radius: 50px; display: none; font-weight: bold; z-index: 1000; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .hidden { display: none; }
+        .clearfix::after { content: ""; clear: both; display: table; }
     </style>
 </head>
 <body>
-    <header><h1>GESTÃO DO CORPO MEDIÚNICO</h1></header>
+    <header><h1>GESTÃO MASTER DO TERREIRO</h1></header>
+    
     <main class="container">
-        
-        <div id="login-screen" class="admin-box" style="max-width: 400px; margin: auto;">
-            <input type="text" id="user" placeholder="Nome Completo">
-            <input type="password" id="pass" placeholder="Senha">
-            <button class="btn btn-add" onclick="login()">ENTRAR NO SISTEMA</button>
+        <div id="login-screen" class="admin-box" style="max-width: 400px; margin: 40px auto;">
+            <h3 style="text-align: center; margin-bottom: 20px;">Acesso Restrito</h3>
+            <label>Usuário Administrador</label>
+            <input type="text" id="user" placeholder="Seu nome completo">
+            <label>Senha</label>
+            <input type="password" id="pass" placeholder="Sua senha">
+            <button class="btn btn-add" onclick="login()">ENTRAR NO PAINEL</button>
         </div>
 
-        <div id="main-screen" class="hidden" style="display:none;">
+        <div id="main-screen" class="hidden">
             <button class="btn btn-save" onclick="enviarParaGithub()">💾 SALVAR TODAS AS ALTERAÇÕES NO SITE</button>
-            <button class="btn btn-add" onclick="adicionarNovo()">+ ADICIONAR NOVO IRMÃO/IRMÃ</button>
-            <div id="lista-edicao"></div>
+            
+            <div class="admin-box">
+                <h3 style="margin-bottom: 15px;">Ações de Membros</h3>
+                <button class="btn btn-add" onclick="adicionarNovo()">+ ADICIONAR NOVO MÉDIUM / ENTIDADE</button>
+            </div>
+
+            <div id="lista-edicao">
+                </div>
         </div>
     </main>
 
@@ -53,93 +68,110 @@
         }
 
         async function login() {
-            const u = document.getElementById('user').value;
+            const u = document.getElementById('user').value.trim();
             const p = document.getElementById('pass').value;
 
             if (u === "Henrique Vieira Neto" && p === "@Hvn2009") {
                 await inicializarDados();
             } else {
-                alert("Credenciais incorretas.");
+                alert("Usuário ou senha incorretos.");
             }
         }
 
         async function inicializarDados() {
             let t = localStorage.getItem('gh_token');
             if(!t) {
-                t = prompt("Digite seu GitHub Token para prosseguir:");
+                t = prompt("Para segurança, cole seu GitHub Token:");
                 if(t) localStorage.setItem('gh_token', t);
                 else return;
             }
 
-            status("⏳ Carregando dados do servidor...");
+            status("⏳ Sincronizando com o servidor...", 0);
             try {
-                const res = await fetch(`https://api.github.com/repos/${REPO_INFO.owner}/${REPO_INFO.repo}/contents/${REPO_INFO.path}`, {
-                    headers: { 'Authorization': `token ${t}` }
+                // O cache: 'no-store' e o timestamp evitam conflitos de versão
+                const res = await fetch(`https://api.github.com/repos/${REPO_INFO.owner}/${REPO_INFO.repo}/contents/${REPO_INFO.path}?t=${Date.now()}`, {
+                    headers: { 'Authorization': `token ${t}` },
+                    cache: 'no-store'
                 });
+                
+                if(!res.ok) throw new Error();
+
                 const data = await res.json();
                 currentSha = data.sha;
                 db = JSON.parse(atob(data.content));
                 
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('main-screen').style.display = 'block';
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('main-screen').classList.remove('hidden');
                 render();
-                status("✅ Dados carregados.");
+                status("✅ Sincronizado!");
             } catch (e) {
-                alert("Erro de conexão. Verifique o Token.");
+                alert("Erro ao conectar. O Token pode estar inválido ou o arquivo não existe.");
                 localStorage.removeItem('gh_token');
+                location.reload();
             }
         }
 
         function render() {
             const cont = document.getElementById('lista-edicao');
-            cont.innerHTML = "";
+            cont.innerHTML = db.mediuns.length === 0 ? "<p style='text-align:center; opacity:0.5;'>Nenhum membro cadastrado.</p>" : "";
+            
             db.mediuns.forEach((m, i) => {
                 const item = document.createElement('div');
-                item.className = 'admin-box card-edit';
+                item.className = 'admin-box card-edit clearfix';
                 item.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                        <strong>MÉDIUM #${i+1}</strong>
-                        <button class="btn btn-del" onclick="remover(${i})">REMOVER</button>
-                    </div>
+                    <button class="btn btn-del" onclick="remover(${i})">REMOVER</button>
+                    <div style="margin-bottom: 15px;"><strong>MEMBRO #${i+1}</strong></div>
+                    
                     <label>Nome Completo</label>
                     <input type="text" value="${m.nome}" oninput="db.mediuns[${i}].nome = this.value.toUpperCase()">
                     
-                    <label>Cargo/Função</label>
+                    <label>Função / Cargo no Terreiro</label>
                     <input type="text" value="${m.cargo}" oninput="db.mediuns[${i}].cargo = this.value">
                     
-                    <label>Entidade Principal</label>
+                    <label>Entidade Principal (Linha de Trabalho)</label>
                     <input type="text" value="${m.entidade}" oninput="db.mediuns[${i}].entidade = this.value">
                     
-                    <label>Caminho da Foto (Ex: ../img/nome.jpg)</label>
-                    <input type="text" value="${m.foto}" oninput="db.mediuns[${i}].foto = this.value">
+                    <label>Caminho da Foto</label>
+                    <input type="text" value="${m.foto}" placeholder="../img/nome.jpg" oninput="db.mediuns[${i}].foto = this.value">
                 `;
                 cont.appendChild(item);
             });
         }
 
         function adicionarNovo() {
-            db.mediuns.unshift({ nome: "NOVO MÉDIUM", cargo: "", entidade: "", foto: "../img/default.jpg" });
+            db.mediuns.unshift({ 
+                nome: "NOVO MEMBRO", 
+                cargo: "Membro", 
+                entidade: "Não informada", 
+                foto: "../img/default.jpg" 
+            });
             render();
-            window.scrollTo(0, 0);
+            status("✨ Novo rascunho adicionado ao topo!");
         }
 
         function remover(i) {
-            if(confirm(`Excluir ${db.mediuns[i].nome}?`)) {
+            if(confirm(`Tem certeza que deseja remover ${db.mediuns[i].nome}?`)) {
                 db.mediuns.splice(i, 1);
                 render();
+                status("🗑️ Removido da lista temporária.");
             }
         }
 
         async function enviarParaGithub() {
             const t = localStorage.getItem('gh_token');
-            status("⏳ Sincronizando com GitHub...", 0);
+            if(!t) return alert("Token não encontrado.");
+
+            status("🚀 Gravando alterações no site...", 0);
 
             try {
                 const res = await fetch(`https://api.github.com/repos/${REPO_INFO.owner}/${REPO_INFO.repo}/contents/${REPO_INFO.path}`, {
                     method: 'PUT',
-                    headers: { 'Authorization': `token ${t}`, 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Authorization': `token ${t}`, 
+                        'Content-Type': 'application/json' 
+                    },
                     body: JSON.stringify({
-                        message: "Atualização via Painel Master",
+                        message: "Atualização via Painel Master: " + new Date().toLocaleString(),
                         content: btoa(JSON.stringify(db, null, 2)),
                         sha: currentSha
                     })
@@ -147,13 +179,19 @@
 
                 if(res.ok) {
                     const resData = await res.json();
-                    currentSha = resData.content.sha;
+                    currentSha = resData.content.sha; // Atualiza o SHA para permitir múltiplos salvamentos
                     status("✅ SITE ATUALIZADO COM SUCESSO!");
+                    setTimeout(() => {
+                        if(confirm("Dados salvos! Deseja ver o site agora?")) {
+                            window.location.href = "mediuns/index.html";
+                        }
+                    }, 1000);
                 } else {
-                    throw new Error();
+                    const errorMsg = await res.json();
+                    alert("Erro do GitHub: " + errorMsg.message);
                 }
             } catch (e) {
-                alert("Erro ao salvar. Verifique se o Token ainda é válido.");
+                alert("Erro crítico de conexão.");
             }
         }
     </script>
