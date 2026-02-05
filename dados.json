@@ -1,37 +1,3 @@
 {
-  "mediuns": [
-    {
-      "nome": "KARINA",
-      "cargo": "Mãe Pequena",
-      "entidade": "Esquerda",
-      "foto": "../img/altar.jpg"
-    },
-    {
-      "nome": "CAROLINA",
-      "cargo": "MÃ£e Pequena",
-      "entidade": "NÃ£o informada",
-      "foto": "../img/altar.jpg"
-    },
-    {
-      "nome": "ALBERTO",
-      "cargo": "BabalorixÃƒÂ¡",
-      "entidade": "Pai Joaquim de Angola",
-      "orixa": "IansÃƒÂ£ e Omolu",
-      "foto": "../img/alberto.jpg"
-    },
-    {
-      "nome": "ANA",
-      "cargo": "BabalorixÃƒÂ¡",
-      "entidade": "VÃƒÂ³ Maria Conga",
-      "orixa": "Ogum e IemanjÃƒÂ¡",
-      "foto": "../img/ana.jpg"
-    },
-    {
-      "nome": "HENRIQUE VIEIRA NETO",
-      "cargo": "Medium em Desenvolvimento",
-      "entidade": "Desconhecida",
-      "orixa": "IansÃƒÆ’Ã‚Â£",
-      "foto": "https://www.tudocelular.com/jogos/noticias/n151321/dragon-ball-fighterz-novo-dlc-goku-ultra-instinct.html"
-    }
-  ]
+  "mediuns": []
 }
