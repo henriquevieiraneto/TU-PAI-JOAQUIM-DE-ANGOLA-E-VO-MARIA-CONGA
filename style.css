@@ -1,117 +1,95 @@
 :root {
     --primary-neon: #00d4ff;
-    --secondary-neon: #7000ff;
-    --malandro-neon: #ff004c; /* Neon exclusivo para Malandros */
-    --gold: #d4af37;
-    --bg-dark: #050505;
-    --glass: rgba(255, 255, 255, 0.03);
-    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
     --text: #e0e0e0;
 }
 
 body {
-    font-family: 'Inter', sans-serif;
-    background: radial-gradient(circle at top right, #111122, #050505);
+    background: #050505;
     color: var(--text);
+    font-family: 'Inter', sans-serif;
     margin: 0;
-    min-height: 100vh;
-}
-
-header {
-    background: rgba(10, 10, 12, 0.8);
-    backdrop-filter: blur(15px);
-    padding: 1.5rem;
-    border-bottom: 1px solid var(--glass-border);
-    text-align: center;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-.logo h1 {
-    font-size: 1.2rem;
-    background: linear-gradient(90deg, var(--primary-neon), var(--secondary-neon));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-nav ul {
-    list-style: none;
     display: flex;
-    justify-content: center;
-    gap: 30px;
-    padding: 15px 0 0;
-    margin: 0;
+    flex-direction: column;
+    align-items: center;
 }
 
-nav a {
-    text-decoration: none;
-    color: #666;
-    font-size: 0.8rem;
-    font-weight: bold;
-    transition: 0.3s;
-}
-
-nav a:hover { color: var(--primary-neon); text-shadow: 0 0 8px var(--primary-neon); }
-
-.container { max-width: 1000px; margin: 0 auto; padding: 2rem; }
-
-/* Grid e Itens de Pasta */
-.folder-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 25px;
-}
-
-.folder-item, .card-medium {
-    background: var(--glass);
-    border: 1px solid var(--glass-border);
-    padding: 40px 20px;
-    border-radius: 20px;
+.container {
+    width: 100%;
+    max-width: 900px; /* Limita a largura total do site */
+    padding: 20px;
     text-align: center;
-    text-decoration: none;
-    color: white;
-    transition: all 0.3s ease;
 }
 
-.folder-item i {
-    font-size: 3rem;
-    margin-bottom: 15px;
-    color: var(--primary-neon);
+/* AJUSTE DO ALTAR (Home) */
+.img-frame {
+    width: 100%;
+    max-width: 500px; /* Altar não fica mais gigante nem minúsculo */
+    margin: 20px auto;
+    border-radius: 15px;
+    border: 1px solid var(--glass-border);
+    overflow: hidden;
+}
+
+.img-frame img {
+    width: 100%;
     display: block;
 }
 
-.folder-item:hover {
-    background: rgba(255, 255, 255, 0.06);
-    transform: translateY(-8px);
-    border-color: var(--primary-neon);
-    box-shadow: 0 15px 35px rgba(0, 212, 255, 0.15);
+/* GRID DE BOTÕES (Menu) */
+.folder-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin-top: 30px;
 }
 
-/* Molduras para as Fotos Reais */
-.altar-container {
-    max-width: 800px;
-    margin: 0 auto;
-    border-radius: 30px;
-    overflow: hidden;
-    border: 2px solid var(--glass-border);
-    box-shadow: 0 0 30px rgba(0, 212, 255, 0.2);
+.folder-item {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    padding: 20px;
+    border-radius: 15px;
+    text-decoration: none;
+    color: white;
+    font-size: 0.9rem;
 }
 
-.img-tech { width: 100%; display: block; filter: saturate(1.2); }
+/* AJUSTE DOS MÉDIUNS (Fotos redondas e proporcionais) */
+.mediuns-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+}
 
-.foto-frame {
-    width: 120px; height: 120px;
-    margin: 0 auto 15px;
-    border-radius: 25% 10%;
-    overflow: hidden;
+.medium-card {
+    width: 200px; /* Define um tamanho padrão para cada perfil */
+}
+
+.medium-card img {
+    width: 150px; /* Tamanho da foto do médium */
+    height: 150px;
+    object-fit: cover; /* Não deixa a foto esticada */
+    border-radius: 50%; /* Foto redonda */
     border: 2px solid var(--primary-neon);
-    box-shadow: 0 0 15px var(--primary-neon);
 }
 
-.foto-perfil { width: 100%; height: 100%; object-fit: cover; }
+/* BOTÕES DE CONTATO (Abaixo) */
+.contact-section {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 30px;
+}
 
-footer { padding: 4rem 1rem; text-align: center; color: #444; font-size: 0.75rem; }
+.contact-btn {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--glass-border);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: white;
+    text-decoration: none;
+}
