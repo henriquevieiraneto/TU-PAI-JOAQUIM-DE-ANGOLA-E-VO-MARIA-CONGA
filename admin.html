@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel Admin | TU Pai Joaquim</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-box { background: var(--glass); padding: 30px; border-radius: 20px; border: 1px solid var(--glass-border); margin-top: 20px; max-width: 500px; margin-inline: auto; }
+        input { width: 100%; padding: 12px; margin: 10px 0; background: #111; border: 1px solid #333; color: white; border-radius: 8px; }
+        .btn-save { background: var(--primary-neon); color: black; font-weight: bold; cursor: pointer; border: none; padding: 15px; width: 100%; border-radius: 8px; margin-top: 20px; }
+        #log { margin-top: 20px; font-size: 0.8rem; color: var(--gold); text-align: center; }
+        .hidden { display: none; }
+        label { font-size: 0.8rem; color: var(--primary-neon); display: block; margin-top: 10px; text-align: left; }
+    </style>
+</head>
+<body>
+    <header><h1>GESTÃO DO PORTAL</h1></header>
+    <main class="container">
+        
+        <div id="step-1" class="admin-box">
+            <h3>Acesso ao Perfil</h3>
+            <input type="text" id="loginNome" placeholder="Nome Completo">
+            <input type="password" id="loginSenha" placeholder="Senha">
+            <p style="font-size: 0.7rem; color: #666; margin-top: 10px;">Na primeira vez, será solicitado o Token de Conexão.</p>
+            <button class="btn-save" onclick="autenticar()">ENTRAR</button>
+        </div>
+
+        <div id="step-2" class="admin-box hidden">
+            <h3 id="boasVindas">Olá, </h3>
+            
+            <label>Cargo ou Função:</label>
+            <input type="text" id="editCargo">
+            
+            <label>Entidade Principal:</label>
+            <input type="text" id="editEntidade">
+
+            <label>Orixá de Frente:</label>
+            <input type="text" id="editOrixa">
+
+            <button class="btn-save" onclick="salvarNoGithub()">ATUALIZAR MEU PERFIL</button>
+            <button onclick="limparChave()" style="background:none; border:none; color:grey; cursor:pointer; margin-top:20px; width:100%; font-size: 0.7rem;">DESLOGAR E LIMPAR CHAVE</button>
+        </div>
+        
+        <div id="log"></div>
+    </main>
+
+    <script>
+        const CONFIG = {
+            owner: 'henriquevieiraneto',
+            repo: 'TU-PAI-JOAQUIM-DE-ANGOLA-E-VO-MARIA-CONGA',
+            path: 'dados.json'
+        };
+
+        let db = null;
+        let userIdx = -1;
+
+        // Recupera o token salvo no navegador ou pede um novo
+        function obterToken() {
+            let token = localStorage.getItem('gh_token');
+            if (!token) {
+                token = prompt("Por favor, insira o Token de Conexão do GitHub:");
+                if (token) localStorage.setItem('gh_token', token);
+            }
+            return token;
+        }
+
+        function limparChave() {
+            localStorage.removeItem('gh_token');
+            location.reload();
+        }
+
+        async function autenticar() {
+            const nome = document.getElementById('loginNome').value.trim();
+            const senha = document.getElementById('loginSenha').value;
+
+            if (nome === "Henrique Vieira Neto" && senha === "@Hvn2009") {
+                carregar(nome);
+            } else {
+                alert("Acesso negado.");
+            }
+        }
+
+        async function carregar(nomeBusca) {
+            const log = document.getElementById('log');
+            const token = obterToken();
+            if(!token) return;
+
+            log.innerText = "⏳ Conectando...";
+            
+            try {
+                const res = await fetch(`https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/${CONFIG.path}`, {
+                    headers: { 'Authorization': `token ${token}` }
+                });
+                
+                if(!res.ok) throw new Error("Token inválido ou erro de conexão.");
+
+                const data = await res.json();
+                db = JSON.parse(atob(data.content));
+                db.sha = data.sha;
+
+                userIdx = db.mediuns.findIndex(m => m.nome.toUpperCase() === nomeBusca.toUpperCase());
+                
+                if(userIdx === -1 && nomeBusca === "Henrique Vieira Neto") {
+                    db.mediuns.push({ nome: nomeBusca.toUpperCase(), cargo: "", entidade: "", orixa: "", foto: "../img/alberto.jpg" });
+                    userIdx = db.mediuns.length - 1;
+                }
+
+                document.getElementById('step-1').classList.add('hidden');
+                document.getElementById('step-2').classList.remove('hidden');
+                document.getElementById('boasVindas').innerText = "Olá, " + nomeBusca;
+                
+                const u = db.mediuns[userIdx];
+                document.getElementById('editCargo').value = u.cargo || "";
+                document.getElementById('editEntidade').value = u.entidade || "";
+                document.getElementById('editOrixa').value = u.orixa || "";
+                log.innerText = "";
+            } catch (e) {
+                log.innerText = "❌ Erro: " + e.message;
+                localStorage.removeItem('gh_token'); // Limpa se estiver errado
+            }
+        }
+
+        async function salvarNoGithub() {
+            const log = document.getElementById('log');
+            const token = localStorage.getItem('gh_token');
+            log.innerText = "⏳ Sincronizando...";
+
+            db.mediuns[userIdx].cargo = document.getElementById('editCargo').value;
+            db.mediuns[userIdx].entidade = document.getElementById('editEntidade').value;
+            db.mediuns[userIdx].orixa = document.getElementById('editOrixa').value;
+
+            try {
+                const res = await fetch(`https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/${CONFIG.path}`, {
+                    method: 'PUT',
+                    headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message: `Update perfil: ${db.mediuns[userIdx].nome}`,
+                        content: btoa(JSON.stringify({ mediuns: db.mediuns }, null, 2)),
+                        sha: db.sha
+                    })
+                });
+
+                if(res.ok) log.innerText = "✅ Perfil atualizado com sucesso!";
+                else log.innerText = "❌ Erro ao salvar.";
+            } catch (err) {
+                log.innerText = "❌ Erro de conexão.";
+            }
+        }
+    </script>
+</body>
+</html>

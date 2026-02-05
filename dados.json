@@ -1,0 +1,16 @@
+{
+  "mediuns": [
+    {
+      "nome": "ALBERTO",
+      "cargo": "Babalorixá",
+      "entidade": "Pai Joaquim de Angola",
+      "foto": "../img/alberto.jpg"
+    },
+    {
+      "nome": "ANA",
+      "cargo": "Babalorixá",
+      "entidade": "Vó Maria Conga",
+      "foto": "../img/ana.jpg"
+    }
+  ]
+}
