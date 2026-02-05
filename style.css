@@ -1,61 +1,107 @@
 :root {
     --primary-neon: #00d4ff;
+    --secondary-neon: #7000ff;
+    --gold: #d4af37;
+    --bg-dark: #050505;
     --glass: rgba(255, 255, 255, 0.05);
     --glass-border: rgba(255, 255, 255, 0.1);
     --text: #e0e0e0;
 }
 
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    transition: 0.3s ease;
+}
+
 body {
-    background: #050505;
+    background: radial-gradient(circle at top, #111, #050505);
     color: var(--text);
     font-family: 'Inter', sans-serif;
-    margin: 0;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-x: hidden;
 }
 
 .container {
-    width: 100%;
-    max-width: 900px; /* Limita a largura total do site */
-    padding: 20px;
+    width: 90%;
+    max-width: 1000px;
+    padding: 20px 0;
     text-align: center;
 }
 
-/* AJUSTE DO ALTAR (Home) */
+/* Header */
+header {
+    width: 100%;
+    background: rgba(10, 10, 12, 0.9);
+    backdrop-filter: blur(10px);
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--glass-border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    text-align: center;
+}
+
+header h1 {
+    font-size: clamp(1rem, 4vw, 1.5rem);
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, var(--primary-neon), #fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+}
+
+/* Moldura das Imagens (Altar e Orixás) */
 .img-frame {
     width: 100%;
-    max-width: 500px; /* Altar não fica mais gigante nem minúsculo */
+    max-width: 500px;
     margin: 20px auto;
     border-radius: 15px;
     border: 1px solid var(--glass-border);
     overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.1);
 }
 
 .img-frame img {
     width: 100%;
+    height: auto;
     display: block;
 }
 
-/* GRID DE BOTÕES (Menu) */
+/* Grid de Botões Principal */
 .folder-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 15px;
-    margin-top: 30px;
+    margin: 30px 0;
 }
 
 .folder-item {
     background: var(--glass);
     border: 1px solid var(--glass-border);
-    padding: 20px;
+    padding: 25px 15px;
     border-radius: 15px;
     text-decoration: none;
     color: white;
-    font-size: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
 
-/* AJUSTE DOS MÉDIUNS (Fotos redondas e proporcionais) */
+.folder-item i { font-size: 1.5rem; color: var(--primary-neon); }
+
+.folder-item:hover {
+    border-color: var(--primary-neon);
+    background: rgba(0, 212, 255, 0.1);
+    transform: translateY(-5px);
+}
+
+/* Grid de Médiuns */
 .mediuns-grid {
     display: flex;
     justify-content: center;
@@ -65,31 +111,51 @@ body {
 }
 
 .medium-card {
-    width: 200px; /* Define um tamanho padrão para cada perfil */
+    flex: 1 1 200px;
+    max-width: 250px;
+    text-align: center;
 }
 
 .medium-card img {
-    width: 150px; /* Tamanho da foto do médium */
-    height: 150px;
-    object-fit: cover; /* Não deixa a foto esticada */
-    border-radius: 50%; /* Foto redonda */
-    border: 2px solid var(--primary-neon);
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--primary-neon);
+    margin-bottom: 15px;
 }
 
-/* BOTÕES DE CONTATO (Abaixo) */
+.medium-card h3 { color: var(--primary-neon); font-size: 1.1rem; }
+.medium-card p { color: var(--gold); font-size: 0.9rem; }
+
+/* Secção de Contactos e Redes */
 .contact-section {
     display: flex;
     justify-content: center;
-    gap: 10px;
-    margin-top: 30px;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 20px;
 }
 
 .contact-btn {
-    background: rgba(255,255,255,0.05);
+    background: var(--glass);
     border: 1px solid var(--glass-border);
-    padding: 8px 15px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    color: white;
+    padding: 10px 20px;
+    border-radius: 50px;
     text-decoration: none;
+    color: white;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.contact-btn:hover { background: var(--glass-border); }
+
+footer { padding: 40px; color: #444; font-size: 0.75rem; text-align: center; }
+
+/* Media Queries para Telemóvel */
+@media (max-width: 480px) {
+    .folder-grid { grid-template-columns: 1fr 1fr; }
+    .img-frame { max-width: 90%; }
 }
