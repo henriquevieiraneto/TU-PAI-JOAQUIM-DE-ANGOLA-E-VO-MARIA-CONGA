@@ -1,15 +1,22 @@
-/* VARIÁVEIS DE CORES */
+/* =========================================
+   VARIÁVEIS E CORES NEON
+   ========================================= */
 :root {
     --primary-neon: #00d4ff;
+    --primary-hover: #0099ff;
     --gold: #ffcc00;
     --bg-dark: #0a0a0a;
     --glass: rgba(255, 255, 255, 0.05);
     --glass-border: rgba(255, 255, 255, 0.1);
     --text-main: #ffffff;
     --text-muted: #aaaaaa;
+    --danger: #dc3545;
+    --success: #28a745;
 }
 
-/* GERAL */
+/* =========================================
+   RESET E GERAL
+   ========================================= */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
@@ -17,6 +24,7 @@ body {
     color: var(--text-main);
     font-family: 'Segoe UI', Roboto, sans-serif;
     line-height: 1.6;
+    overflow-x: hidden;
 }
 
 .container {
@@ -25,31 +33,71 @@ body {
     padding: 20px;
 }
 
-/* HEADER & NAV */
+/* =========================================
+   HEADER E NAVEGAÇÃO
+   ========================================= */
 header {
-    background: linear-gradient(to bottom, #111, transparent);
     padding: 40px 20px;
-    text-align: center;
+    background: linear-gradient(to bottom, #111, transparent);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 header h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     letter-spacing: 3px;
     text-shadow: 0 0 15px var(--primary-neon);
-    margin-top: 10px;
+    flex-grow: 1;
+    text-align: center;
+}
+
+/* =========================================
+   BOTÕES
+   ========================================= */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    text-decoration: none;
+    font-size: 0.9rem;
 }
 
 .btn-back-home {
     color: var(--primary-neon);
     text-decoration: none;
-    font-size: 0.9rem;
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: 8px;
-    margin-bottom: 20px;
+    white-space: nowrap;
 }
 
-/* GRID DE MÉDIUNS */
+.btn-admin-access {
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    transition: 0.3s;
+}
+
+.btn-admin-access:hover {
+    color: var(--primary-neon);
+    transform: rotate(45deg);
+}
+
+/* =========================================
+   GRID E CARDS DE MÉDIUNS
+   ========================================= */
 .mediuns-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -57,85 +105,77 @@ header h1 {
     margin-top: 40px;
 }
 
-/* CARD DO MÉDIUM */
 .medium-card {
     background: var(--glass);
     border: 1px solid var(--glass-border);
     border-radius: 20px;
-    padding: 25px;
+    padding: 30px;
     text-align: center;
-    transition: transform 0.3s ease, border-color 0.3s ease;
+    transition: all 0.3s ease;
     backdrop-filter: blur(10px);
 }
 
 .medium-card:hover {
     transform: translateY(-10px);
     border-color: var(--primary-neon);
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.1);
 }
 
 .medium-card img {
-    width: 120px;
-    height: 120px;
+    width: 130px;
+    height: 130px;
     border-radius: 50%;
     object-fit: cover;
     border: 3px solid var(--primary-neon);
-    margin-bottom: 15px;
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+    margin-bottom: 20px;
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
 }
 
 .medium-card h3 {
-    font-size: 1.4rem;
     color: var(--gold);
     margin-bottom: 5px;
     text-transform: uppercase;
+    font-size: 1.4rem;
 }
 
-.medium-card p {
-    margin: 5px 0;
-}
-
-/* LINK DO ORIXÁ */
 .orixa-link-container {
-    background: rgba(0, 0, 0, 0.3);
-    padding: 5px 10px;
+    margin: 15px 0;
+    font-size: 0.9rem;
+    background: rgba(0,0,0,0.3);
+    padding: 5px 15px;
     border-radius: 50px;
     display: inline-block;
-    margin: 10px 0;
-    font-size: 0.9rem;
 }
 
 .link-orixa {
     color: var(--primary-neon);
     text-decoration: none;
     font-weight: bold;
-    transition: 0.3s;
 }
 
 .link-orixa:hover {
-    text-shadow: 0 0 10px var(--primary-neon);
-    color: white;
+    text-shadow: 0 0 8px var(--primary-neon);
 }
 
-/* DETALHES PEQUENOS */
 .detalhes-entidade {
     display: block;
     font-size: 0.8rem;
     color: var(--text-muted);
     border-top: 1px solid var(--glass-border);
     margin-top: 15px;
-    padding-top: 10px;
+    padding-top: 15px;
 }
 
-/* RESPONSIVIDADE */
+/* =========================================
+   RESPONSIVIDADE
+   ========================================= */
 @media (max-width: 600px) {
-    header h1 { font-size: 1.8rem; }
+    header h1 { font-size: 1.4rem; }
+    .nav-container { padding: 0 10px; }
     .mediuns-grid { grid-template-columns: 1fr; }
+    .btn-back-home span { display: none; } /* Esconde o texto no mobile, deixa só ícone */
 }
 
-.loading {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 50px;
-    font-style: italic;
-    color: var(--primary-neon);
-}
+/* Auxiliares */
+.loading { grid-column: 1 / -1; text-align: center; padding: 50px; color: var(--primary-neon); }
+.hidden { display: none !important; }
