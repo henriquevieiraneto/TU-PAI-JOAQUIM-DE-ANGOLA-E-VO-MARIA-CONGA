@@ -4,12 +4,14 @@
       "nome": "ALBERTO",
       "cargo": "Babalorixá",
       "entidade": "Pai Joaquim de Angola",
+      "orixa": "Iansã e Omolu",
       "foto": "../img/alberto.jpg"
     },
     {
       "nome": "ANA",
       "cargo": "Babalorixá",
       "entidade": "Vó Maria Conga",
+      "orixa": "Ogum e Iemanjá",
       "foto": "../img/ana.jpg"
     },
     {
