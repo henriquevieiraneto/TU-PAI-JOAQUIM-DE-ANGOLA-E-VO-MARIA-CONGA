@@ -14,5 +14,13 @@
       "linha": "Desconhecida",
       "orixa": "Iansã"
     }
+  ],
+  "calendario": [
+    {
+      "data": "2026-02-14",
+      "evento": "Preto Velho e Santo Velho",
+      "horario": "19:00",
+      "status": "Confirmado"
+    }
   ]
 }
