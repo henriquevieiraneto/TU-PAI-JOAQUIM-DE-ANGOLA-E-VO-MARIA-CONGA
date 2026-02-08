@@ -1,40 +1,25 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Obaluaiê | TU Pai Joaquim</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --neon: #00d4ff; --gold: #ffcc00; --glass: rgba(255,255,255,0.05); }
-        body { background: #0a0a0a; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; text-align: center; }
-        header { padding: 30px 15px; }
-        h1 { color: var(--neon); text-transform: uppercase; margin: 0; font-size: 1.8rem; }
-        .btn-voltar {
-            display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px;
-            background: rgba(0,212,255,0.1); border: 1px solid var(--neon);
-            color: #fff !important; text-decoration: none; border-radius: 50px;
-            font-weight: bold; font-size: 0.8rem; margin-top: 15px; transition: 0.3s;
-        }
+        :root { --neon: #00d4ff; --healing: #ff9f43; --glass: rgba(255,255,255,0.05); }
+        body { background: #0a0a0a; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; text-align: center; padding-bottom: 40px; }
+        header { padding: 25px 15px; }
+        h1 { color: var(--neon); text-transform: uppercase; margin: 5px 0; font-size: 1.8rem; }
+        .btn-voltar { display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px; background: rgba(0,212,255,0.1); border: 1px solid var(--neon); color: #fff !important; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 0.75rem; margin-bottom: 15px; transition: 0.3s; }
         .btn-voltar:hover { background: var(--neon); color: #000 !important; }
-        .content { max-width: 600px; margin: 20px auto; padding: 25px; background: var(--glass); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
-        .icon-header { font-size: 3rem; color: #e74c3c; margin-bottom: 15px; }
-        p { line-height: 1.6; color: #ccc; font-size: 0.95rem; text-align: justify; }
-        .info-tag { display: inline-block; padding: 5px 15px; background: rgba(255,255,255,0.1); border-radius: 15px; font-size: 0.8rem; margin: 10px 5px; color: #ff9f43; }
+        .content { max-width: 500px; margin: 0 auto; padding: 20px; background: var(--glass); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
+        .foto-orixa { width: 100%; max-width: 250px; height: 250px; margin: 0 auto 20px; border-radius: 15px; border: 2px solid var(--healing); object-fit: cover; display: block; }
+        .icon-header { font-size: 2.5rem; color: var(--healing); margin-bottom: 5px; }
+        p { line-height: 1.6; color: #ccc; font-size: 0.95rem; text-align: justify; margin-top: 15px; }
+        .info-tag { display: inline-block; padding: 5px 15px; background: rgba(255,255,255,0.1); border-radius: 15px; font-size: 0.8rem; margin: 5px; color: var(--healing); border: 1px solid var(--healing); }
     </style>
 </head>
 <body>
-    <header>
-        <div class="icon-header"><i class="fas fa-heart-pulse"></i></div>
-        <h1>Obaluaiê</h1>
-        <a href="index.html" class="btn-voltar"><i class="fas fa-chevron-left"></i> VOLTAR</a>
-    </header>
-    <main class="content">
-        <div class="info-tag">Senhor da Cura</div>
-        <div class="info-tag">Saudação: Atotô!</div>
-        <p>
-            Obaluaiê é o senhor das doenças e da cura. Representa a transformação através do sofrimento e a regeneração da vida. Coberto de palha da costa, ele guarda os mistérios da terra e da passagem entre o mundo material e espiritual.
-        </p>
-    </main>
+    <header><a href="index.html" class="btn-voltar"><i class="fas fa-chevron-left"></i> VOLTAR</a><div class="icon-header"><i class="fas fa-heart-pulse"></i></div><h1>Obaluaiê</h1></header>
+    <main class="content"><img src="/img/obaluaye.png" alt="Obaluaiê" class="foto-orixa"><div class="info-tag">Senhor da Cura</div><div class="info-tag">Saudação: Atotô!</div><p>Mestre das curas e das transformações, senhor da terra que regenera o corpo e a alma através da renovação.</p></main>
 </body>
 </html>
