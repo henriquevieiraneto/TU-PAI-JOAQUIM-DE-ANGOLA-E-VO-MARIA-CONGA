@@ -9,42 +9,28 @@
     <style>
         :root { --neon: #00d4ff; --bg: #000000; }
         body { 
-            font-family: 'Rajdhani', sans-serif; 
-            background: var(--bg); 
-            color: #fff; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            height: 100vh; 
-            margin: 0;
+            font-family: 'Rajdhani', sans-serif; background: var(--bg); color: #fff; 
+            display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0;
             background-image: radial-gradient(circle at center, #111 0%, #000 100%);
         }
         .login-card { 
-            background: #0a0a0a; 
-            padding: 40px; 
-            border-radius: 15px; 
-            border: 1px solid #222; 
-            width: 100%; 
-            max-width: 400px; 
-            text-align: center; 
-            box-shadow: 0 0 30px rgba(0,0,0,1);
+            background: #0a0a0a; padding: 40px; border-radius: 15px; border: 1px solid #222; 
+            width: 100%; max-width: 400px; text-align: center; 
         }
-        h1 { font-family: 'Orbitron'; font-size: 1.2rem; letter-spacing: 3px; margin: 20px 0; color: #fff; }
+        h1 { font-family: 'Orbitron'; font-size: 1.2rem; letter-spacing: 3px; margin: 20px 0; }
         .input-group { text-align: left; margin-bottom: 20px; }
-        label { font-size: 0.7rem; text-transform: uppercase; color: #888; display: block; margin-bottom: 8px; font-weight: bold; letter-spacing: 1px; }
+        label { font-size: 0.7rem; text-transform: uppercase; color: #888; display: block; margin-bottom: 8px; font-weight: bold; }
         input { 
             width: 100%; padding: 12px; background: #111; border: 1px solid #333; 
             color: #fff; border-radius: 8px; outline: none; font-family: 'Rajdhani';
         }
-        input:focus { border-color: var(--neon); }
         .btn { 
             width: 100%; padding: 15px; border-radius: 8px; cursor: pointer; 
             font-family: 'Orbitron'; font-size: 0.8rem; border: none; transition: 0.3s; margin-top: 10px; 
         }
         .btn-enter { background: #000; color: #fff; border: 1px solid #222; }
-        .btn-enter:hover { border-color: var(--neon); color: var(--neon); box-shadow: 0 0 15px rgba(0,212,255,0.2); }
+        .btn-enter:hover { border-color: var(--neon); color: var(--neon); }
         .btn-back { background: transparent; color: #555; font-size: 0.7rem; margin-top: 20px; text-decoration: none; display: inline-block; }
-        .btn-back:hover { color: #fff; }
     </style>
 </head>
 <body>
@@ -56,21 +42,21 @@
             <input type="text" id="user" placeholder="admin">
         </div>
         <div class="input-group">
-            <label>Token GitHub (Chave)</label>
-            <input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxx">
+            <label>Senha</label>
+            <input type="password" id="pass" placeholder="admin">
         </div>
-        <button class="btn btn-enter" onclick="autenticar()">SINCRONIZAR ACESSO</button>
-        <a href="index.html" class="btn btn-back"><i class="fas fa-arrow-left"></i> VOLTAR AO SITE PÚBLICO</a>
+        <button class="btn btn-enter" onclick="logar()">ENTRAR NO PAINEL</button>
+        <a href="index.html" class="btn btn-back"><i class="fas fa-arrow-left"></i> VOLTAR AO SITE</a>
     </div>
 
     <script>
-        function autenticar() {
-            const token = document.getElementById('gh-token').value;
-            const user = document.getElementById('user').value;
-            if(token.length > 10 && user === "admin") {
-                localStorage.setItem('gh_token', token);
+        function logar() {
+            const u = document.getElementById('user').value;
+            const p = document.getElementById('pass').value;
+            if(u === "admin" && p === "admin") {
+                localStorage.setItem('admin_auth', 'true');
                 window.location.href = 'mediuns_admin.html';
-            } else { alert("Usuário ou Token inválidos."); }
+            } else { alert("Usuário ou senha incorretos."); }
         }
     </script>
 </body>
