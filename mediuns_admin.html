@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Médiuns | Master Control</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Rajdhani:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #00d4ff; --bg: #000000; }
+        body { font-family: 'Rajdhani', sans-serif; background: var(--bg); color: #fff; margin: 0; padding-bottom: 50px; }
+        
+        .header { position: sticky; top: 0; z-index: 100; background: #000; padding: 15px; border-bottom: 2px solid var(--primary); display: flex; align-items: center; gap: 15px; }
+        .search-bar { flex-grow: 1; position: relative; }
+        .search-bar i { position: absolute; left: 15px; top: 12px; color: var(--primary); }
+        input#search { width: 100%; padding: 12px 45px; background: #0a0a0a; border: 1px solid #333; color: #fff; border-radius: 30px; outline: none; }
+
+        .nav-tabs { display: flex; justify-content: center; gap: 10px; padding: 20px; background: #050505; border-bottom: 1px solid #111; }
+        .tab { padding: 10px 25px; border: 1px solid #333; color: #888; cursor: pointer; font-family: 'Orbitron'; font-size: 0.7rem; border-radius: 5px; text-decoration: none; transition: 0.3s; }
+        .tab.active { border-color: var(--primary); color: var(--primary); box-shadow: 0 0 10px rgba(0,212,255,0.2); }
+        
+        .container { max-width: 1000px; margin: 20px auto; padding: 0 20px; }
+        .admin-box { background: #0a0a0a; border-radius: 12px; padding: 25px; margin-bottom: 20px; border: 1px solid #222; border-left: 4px solid var(--primary); position: relative; }
+        
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        label { color: var(--primary); font-size: 0.7rem; text-transform: uppercase; font-weight: bold; display: block; margin-bottom: 5px; }
+        input { width: 100%; padding: 10px; background: #000; border: 1px solid #333; color: #fff; border-radius: 5px; font-family: 'Rajdhani'; }
+        
+        .actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .btn { padding: 12px 20px; border-radius: 8px; cursor: pointer; font-family: 'Orbitron'; font-size: 0.7rem; border: none; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
+        .btn-add { border: 1px solid var(--primary); color: var(--primary); background: transparent; }
+        .btn-save { background: #28a745; color: #fff; }
+        .btn-back { background: #111; color: #fff; text-decoration: none; border: 1px solid #222; }
+        .btn-del { position: absolute; top: 10px; right: 10px; color: #444; background: none; border: none; cursor: pointer; }
+        .btn-del:hover { color: #ff4444; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="index.html" class="btn btn-back"><i class="fas fa-home"></i> SITE</a>
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" id="search" placeholder="PESQUISAR MÉDIUM..." oninput="render()">
+        </div>
+        <button class="btn btn-save" onclick="salvar()"><i class="fas fa-save"></i> SALVAR TUDO</button>
+    </div>
+
+    <div class="nav-tabs">
+        <a href="mediuns_admin.html" class="tab active">MÉDIUNS</a>
+        <a href="calendario_admin.html" class="tab">CALENDÁRIO</a>
+    </div>
+
+    <div class="container">
+        <div class="actions">
+            <h2 style="font-family: 'Orbitron'; font-size: 0.9rem; letter-spacing: 2px;">GESTÃO DE CORRENTE</h2>
+            <button class="btn btn-add" onclick="novo()">+ NOVO MÉDIUM</button>
+        </div>
+        <div id="lista-mediuns"></div>
+    </div>
+
+    <script>
+        const REPO = { owner: 'henriquevieiraneto', name: 'TU-PAI-JOAQUIM-DE-ANGOLA-E-VO-MARIA-CONGA', file: 'dados.json' };
+        let db = { mediuns: [], calendario: [] };
+        let sha = "";
+
+        async function carregar() {
+            const token = localStorage.getItem('gh_token');
+            if(!token) window.location.href = 'acesso.html';
+            try {
+                const res = await fetch(`https://api.github.com/repos/${REPO.owner}/${REPO.name}/contents/${REPO.file}?t=${Date.now()}`);
+                const data = await res.json();
+                sha = data.sha;
+                db = JSON.parse(decodeURIComponent(escape(window.atob(data.content))));
+                render();
+            } catch(e) { alert("Erro ao carregar dados."); }
+        }
+
+        function render() {
+            const list = document.getElementById('lista-mediuns');
+            const term = document.getElementById('search').value.toLowerCase();
+            list.innerHTML = "";
+            db.mediuns.forEach((m, i) => {
+                if(term && !m.nome.toLowerCase().includes(term) && !m.entidade.toLowerCase().includes(term)) return;
+                const div = document.createElement('div');
+                div.className = 'admin-box';
+                div.innerHTML = `
+                    <button class="btn-del" onclick="remover(${i})"><i class="fas fa-trash"></i></button>
+                    <div class="form-grid">
+                        <div><label>Nome</label><input type="text" value="${m.nome}" oninput="db.mediuns[${i}].nome=this.value"></div>
+                        <div><label>Orixá</label><input type="text" value="${m.orixa}" oninput="db.mediuns[${i}].orixa=this.value"></div>
+                        <div><label>Cargo</label><input type="text" value="${m.cargo}" oninput="db.mediuns[${i}].cargo=this.value"></div>
+                        <div><label>Entidade</label><input type="text" value="${m.entidade}" oninput="db.mediuns[${i}].entidade=this.value"></div>
+                    </div>
+                    <div style="margin-top:15px"><label>Link da Foto</label><input type="text" value="${m.foto}" oninput="db.mediuns[${i}].foto=this.value"></div>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        function novo() { db.mediuns.unshift({nome:"", orixa:"", cargo:"", entidade:"", foto:""}); render(); }
+        function remover(i) { if(confirm("Remover médium?")) { db.mediuns.splice(i,1); render(); } }
+
+        async function salvar() {
+            const token = localStorage.getItem('gh_token');
+            const content = btoa(unescape(encodeURIComponent(JSON.stringify(db, null, 2))));
+            const res = await fetch(`https://api.github.com/repos/${REPO.owner}/${REPO.name}/contents/${REPO.file}`, {
+                method: 'PUT',
+                headers: { 'Authorization': `token ${token}` },
+                body: JSON.stringify({ message: "Update Médiuns", content, sha })
+            });
+            if(res.ok) { 
+                const r = await res.json(); 
+                sha = r.content.sha; 
+                alert("✅ Corrente atualizada com sucesso!"); 
+            }
+        }
+        carregar();
+    </script>
+</body>
+</html>
