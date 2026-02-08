@@ -2,25 +2,32 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Nanã | TU Pai Joaquim</title>
-    <link rel="stylesheet" href="../style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nanã Buruquê | TU Pai Joaquim</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --neon: #00d4ff; --gold: #ffcc00; --glass: rgba(255,255,255,0.05); --nana: #9b59b6; }
+        body { background: #0a0a0a; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; text-align: center; }
+        header { padding: 30px 15px; }
+        h1 { color: var(--neon); text-transform: uppercase; margin: 0; font-size: 1.8rem; }
+        .btn-voltar { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: rgba(0,212,255,0.1); border: 1px solid var(--neon); color: #fff !important; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 0.8rem; margin-top: 15px; transition: 0.3s; }
+        .btn-voltar:hover { background: var(--neon); color: #000 !important; }
+        .content { max-width: 600px; margin: 20px auto; padding: 25px; background: var(--glass); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
+        .icon-header { font-size: 3rem; color: var(--nana); margin-bottom: 15px; }
+        p { line-height: 1.6; color: #ccc; font-size: 0.95rem; text-align: justify; }
+        .info-tag { display: inline-block; padding: 5px 15px; background: rgba(255,255,255,0.1); border-radius: 15px; font-size: 0.8rem; margin: 10px 5px; color: var(--nana); }
+    </style>
 </head>
-<body style="--orixa-color: #9b59b6; --orixa-rgb: 155, 89, 182;">
+<body>
     <header>
-        <div class="logo"><h1>Mãe Nanã</h1></div>
-        <nav><a href="index.html">← Voltar</a></nav>
+        <div class="icon-header"><i class="fas fa-tree"></i></div>
+        <h1>Nanã Buruquê</h1>
+        <a href="index.html" class="btn-voltar"><i class="fas fa-chevron-left"></i> VOLTAR</a>
     </header>
-    <main class="container">
-        <div class="img-frame"><img src="../img/nana.png" alt="Nanã"></div>
-        <section class="info-box">
-            <h2>O Trono da Evolução</h2>
-            <p>Senhora da sabedoria anciã e da decantação das almas para a renovação.</p>
-            <div class="badge-list">
-                <span class="badge">SALUBA NANÃ</span>
-                <span class="badge">ROXO / LILÁS</span>
-                <span class="badge">TERRA ÚMIDA</span>
-            </div>
-        </section>
+    <main class="content">
+        <div class="info-tag">A Árvore da Sabedoria</div>
+        <div class="info-tag">Saudação: Saluba Nanã!</div>
+        <p>Nanã Buruquê é a Orixá mais antiga, representando a sabedoria ancestral, a paciência e a decantação das energias. Como uma árvore de raízes profundas, ela guarda a memória do mundo e rege os mistérios da vida, morte e renascimento, oferecendo o colo da avó benevolente a todos os seus filhos.</p>
     </main>
 </body>
 </html>

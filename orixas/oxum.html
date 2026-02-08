@@ -2,25 +2,32 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oxum | TU Pai Joaquim</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --neon: #00d4ff; --gold: #ffcc00; --glass: rgba(255,255,255,0.05); }
+        body { background: #0a0a0a; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; text-align: center; }
+        header { padding: 30px 15px; }
+        h1 { color: var(--neon); text-transform: uppercase; margin: 0; font-size: 1.8rem; }
+        .btn-voltar { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: rgba(0,212,255,0.1); border: 1px solid var(--neon); color: #fff !important; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 0.8rem; margin-top: 15px; transition: 0.3s; }
+        .btn-voltar:hover { background: var(--neon); color: #000 !important; }
+        .content { max-width: 600px; margin: 20px auto; padding: 25px; background: var(--glass); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
+        .icon-header { font-size: 3rem; color: var(--gold); margin-bottom: 15px; }
+        p { line-height: 1.6; color: #ccc; font-size: 0.95rem; text-align: justify; }
+        .info-tag { display: inline-block; padding: 5px 15px; background: rgba(255,255,255,0.1); border-radius: 15px; font-size: 0.8rem; margin: 10px 5px; color: var(--gold); }
+    </style>
 </head>
-<body style="--orixa-color: #ffd700; --orixa-rgb: 255, 215, 0;">
+<body>
     <header>
-        <div class="logo"><h1>Mãe Oxum</h1></div>
-        <nav><a href="index.html">← Voltar</a></nav>
+        <div class="icon-header"><i class="fas fa-gem"></i></div>
+        <h1>Oxum</h1>
+        <a href="index.html" class="btn-voltar"><i class="fas fa-chevron-left"></i> VOLTAR</a>
     </header>
-    <main class="container">
-        <div class="img-frame"><img src="../img/oxum.png" alt="Oxum"></div>
-        <section class="info-box">
-            <h2>O Trono do Amor</h2>
-            <p>Senhora das águas doces, do ouro e do amor que sustenta a criação.</p>
-            <div class="badge-list">
-                <span class="badge">ORA IÊ IÊ Ô</span>
-                <span class="badge">AMARELO OURO</span>
-                <span class="badge">ÁGUA DOCE</span>
-            </div>
-        </section>
+    <main class="content">
+        <div class="info-tag">Senhora das Águas Doces</div>
+        <div class="info-tag">Saudação: Ora Yê Yê Ô!</div>
+        <p>Oxum é o amor divino, a fertilidade e a prosperidade. Senhora das cachoeiras e dos rios, ela rege as emoções, o ouro e a beleza que existe na vida.</p>
     </main>
 </body>
 </html>

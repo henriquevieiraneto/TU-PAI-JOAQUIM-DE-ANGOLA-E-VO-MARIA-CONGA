@@ -3,73 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel Master | TU Pai Joaquim</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Painel de Administrador | TU Pai Joaquim</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --input-bg: #111; --border: #333; }
-        body { font-size: 16px; }
-        .container { max-width: 800px; padding: 15px; }
-        .admin-box { background: var(--glass); padding: 20px; border-radius: 15px; border: 1px solid var(--glass-border); margin-bottom: 20px; }
+        :root { 
+            --input-bg: #111; 
+            --border: #333; 
+            --accent: #00d4ff;
+            --success: #28a745;
+            --danger: #dc3545;
+        }
+        body { font-size: 16px; background-color: #050505; color: #eee; }
+        .container { max-width: 900px; padding: 20px; margin: auto; }
+        .admin-box { background: var(--glass); padding: 25px; border-radius: 15px; border: 1px solid var(--glass-border); margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .header-painel { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #222; padding-bottom: 15px; }
+        
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
 
-        .card-edit { border-left: 5px solid var(--primary-neon); background: rgba(0,0,0,0.4); position: relative; }
+        .card-edit { border-left: 5px solid var(--primary-neon); background: rgba(20,20,20,0.6); position: relative; transition: 0.3s; }
+        .card-edit:hover { border-left-color: #fff; transform: translateX(5px); }
         
-        label { font-size: 0.75rem; color: var(--primary-neon); text-transform: uppercase; font-weight: bold; display: block; margin-top: 10px; }
+        label { font-size: 0.8rem; color: var(--primary-neon); text-transform: uppercase; font-weight: bold; display: block; margin-top: 12px; letter-spacing: 1px; }
         
         input, select { 
-            width: 100%; padding: 12px; margin: 5px 0; background: var(--input-bg); 
-            border: 1px solid var(--border); color: #fff; border-radius: 8px; font-size: 1rem;
-            box-sizing: border-box;
+            width: 100%; padding: 14px; margin: 8px 0; background: var(--input-bg); 
+            border: 1px solid var(--border); color: #fff; border-radius: 10px; font-size: 1rem;
+            box-sizing: border-box; outline: none; transition: 0.3s;
         }
+        input:focus, select:focus { border-color: var(--primary-neon); box-shadow: 0 0 10px rgba(0, 212, 255, 0.2); }
 
-        .foto-container { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 15px; }
-        .preview-img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary-neon); }
-        .drop-zone { width: 100%; border: 2px dashed #444; border-radius: 8px; padding: 15px; text-align: center; color: #888; font-size: 0.8rem; cursor: pointer; }
+        .foto-container { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-bottom: 18px; }
+        .preview-img { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary-neon); box-shadow: 0 0 15px rgba(0,0,0,0.5); }
+        .drop-zone { width: 100%; border: 2px dashed #444; border-radius: 10px; padding: 20px; text-align: center; color: #aaa; font-size: 0.9rem; cursor: pointer; transition: 0.3s; }
+        .drop-zone:hover { border-color: var(--primary-neon); background: rgba(0, 212, 255, 0.05); }
 
-        .btn { padding: 15px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.3s; font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .btn-add { background: var(--primary-neon); color: black; margin: 15px 0; }
-        .btn-save { background: #28a745; color: white; position: sticky; top: 10px; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        .btn-back { background: rgba(255,255,255,0.1); color: white; border: 1px solid var(--border); margin-top: 10px; }
-        .btn-back:hover { background: rgba(255,255,255,0.2); }
-        .btn-del { background: #dc3545; color: white; width: auto; padding: 8px 12px; font-size: 0.7rem; float: right; }
+        .btn { padding: 16px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.3s; font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: 12px; }
+        .btn-add { background: var(--primary-neon); color: black; margin: 20px 0; box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3); }
+        .btn-save { background: var(--success); color: white; position: sticky; top: 15px; z-index: 100; box-shadow: 0 6px 20px rgba(0,0,0,0.6); }
+        .btn-save:hover { background: #218838; transform: scale(1.02); }
+        .btn-back { background: rgba(255,255,255,0.05); color: white; border: 1px solid #444; margin-top: 12px; }
+        .btn-back:hover { background: rgba(255,255,255,0.15); border-color: #777; }
+        .btn-del { background: var(--danger); color: white; width: auto; padding: 10px 15px; font-size: 0.75rem; border-radius: 6px; position: absolute; top: 15px; right: 15px; }
         
-        #log { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); padding: 12px 25px; background: var(--primary-neon); color: black; border-radius: 50px; display: none; font-weight: bold; z-index: 1000; width: 80%; text-align: center; }
+        #search-bar { margin-bottom: 20px; border-left: 4px solid var(--primary-neon); padding-left: 15px; }
+        .stats-bar { display: flex; gap: 15px; margin-bottom: 20px; font-size: 0.85rem; color: #888; }
+        .stats-item { background: #111; padding: 5px 12px; border-radius: 20px; border: 1px solid #222; }
+
+        #log { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); padding: 15px 30px; background: #fff; color: #000; border-radius: 50px; display: none; font-weight: bold; z-index: 1000; box-shadow: 0 10px 40px rgba(0,0,0,0.8); animation: slideUp 0.4s ease; }
+        @keyframes slideUp { from { bottom: -50px; } to { bottom: 25px; } }
         .hidden { display: none; }
     </style>
 </head>
 <body>
-    <header><h1>PAINEL DE GESTÃO</h1></header>
+    <header><h1 style="text-align: center; padding: 20px; letter-spacing: 2px;">SISTEMA DE GESTÃO</h1></header>
     
     <main class="container">
-        
-        <div id="login-screen" class="admin-box" style="max-width: 400px; margin: 40px auto;">
-            <h2 style="text-align: center; margin-bottom: 20px;">Restrito</h2>
-            <input type="text" id="user" placeholder="Usuário">
-            <input type="password" id="pass" placeholder="Senha">
-            <button class="btn btn-add" onclick="login()">ACESSAR PAINEL</button>
+        <div id="login-screen" class="admin-box" style="max-width: 450px; margin: 60px auto;">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <i class="fas fa-user-shield fa-3x" style="color: var(--primary-neon);"></i>
+                <h2 style="margin-top: 15px;">Autenticação</h2>
+            </div>
+            <label>E-mail de Acesso</label>
+            <input type="text" id="user" placeholder="exemplo@gmail.com">
+            <label>Chave de Segurança</label>
+            <input type="password" id="pass" placeholder="••••••••">
+            <button class="btn btn-add" onclick="login()"><i class="fas fa-sign-in-alt"></i> ENTRAR NO SISTEMA</button>
             <a href="index.html" style="text-decoration: none;">
-                <button class="btn btn-back"><i class="fas fa-home"></i> VOLTAR AO SITE</button>
+                <button class="btn btn-back"><i class="fas fa-arrow-left"></i> CANCELAR E VOLTAR</button>
             </a>
         </div>
 
         <div id="main-screen" class="hidden">
-            <div style="display: flex; gap: 10px;">
-                <button class="btn btn-save" onclick="enviarParaGithub()">💾 SALVAR NO SITE</button>
-                <a href="index.html" style="flex-grow: 1; text-decoration: none;">
-                    <button class="btn btn-back" style="margin-top: 0; height: 100%;"><i class="fas fa-eye"></i> VER SITE</button>
-                </a>
+            <div class="header-painel">
+                <div>
+                    <h2 id="welcome-msg">Painel de Controle</h2>
+                    <div class="stats-bar" id="stats-bar">
+                        </div>
+                </div>
+                <div style="display: flex; gap: 12px; width: 400px;">
+                    <button class="btn btn-save" onclick="enviarParaGithub()"><i class="fas fa-cloud-upload-alt"></i> PUBLICAR SITE</button>
+                    <a href="index.html" style="text-decoration: none; flex-grow: 1;">
+                        <button class="btn btn-back" style="margin-top: 0; height: 100%;"><i class="fas fa-external-link-alt"></i> VER SITE</button>
+                    </a>
+                </div>
+            </div>
+
+            <div id="search-bar">
+                <input type="text" id="filterInput" placeholder="🔍 Buscar por nome ou entidade..." oninput="filtrarCards()">
             </div>
             
-            <button class="btn btn-add" onclick="adicionarNovo()">+ ADICIONAR NOVO MÉDIUM</button>
+            <button class="btn btn-add" onclick="adicionarNovo()"><i class="fas fa-plus-circle"></i> NOVO REGISTRO DE MÉDIUM</button>
             
             <div id="lista-edicao"></div>
         </div>
     </main>
 
-    <div id="log">Processando...</div>
+    <div id="log">Mensagem do Sistema</div>
 
     <script>
         const REPO_INFO = { owner: 'henriquevieiraneto', repo: 'TU-PAI-JOAQUIM-DE-ANGOLA-E-VO-MARIA-CONGA', path: 'dados.json' };
@@ -77,26 +108,34 @@
         let currentSha = "";
 
         const LISTAS = {
-            orixas: ["Oxalá", "Iemanjá", "Ogum", "Oxum", "Oxóssi", "Xangô", "Iansã", "Obaluaê", "Nanã", "Ibeji" , "Desconhecido"],
-            cargos: ["Babalorixá", "Ialorixá", "Pai de Santo", "Mãe de Santo", "Zelador", "Médium de Corrente", "Cambone", "Ogã", "Outros"],
-            linhas: ["Preto Velho", "Caboclo", "Baiano", "Marinheiro", "Erê", "Exu", "Pombagira", "Cigano", "Boiadeiro", "Desconhecido"]
+            orixas: ["Oxalá", "Iemanjá", "Ogum", "Oxum", "Oxóssi", "Xangô", "Iansã", "Obaluaê", "Nanã", "Ibeji", "Desconhecido"],
+            cargos: ["Babalorixá", "Ialorixá", "Pai de Santo", "Mãe de Santo", "Zelador", "Médium de Corrente", "Cambone", "Ogã", "Ekedji", "Iniciante", "Outros"],
+            linhas: ["Preto Velho", "Caboclo", "Baiano", "Marinheiro", "Erê", "Exu", "Pombagira", "Cigano", "Boiadeiro", "Malandro", "Desconhecido"]
         };
 
-        function status(msg) {
+        function status(msg, color = "#00d4ff") {
             const l = document.getElementById('log');
-            l.innerText = msg; l.style.display = 'block';
-            setTimeout(() => l.style.display = 'none', 3000);
+            l.innerText = msg; 
+            l.style.background = color;
+            l.style.display = 'block';
+            setTimeout(() => l.style.display = 'none', 4000);
         }
 
         function b64_to_utf8(str) { return decodeURIComponent(escape(window.atob(str))); }
 
         async function login() {
-            if (document.getElementById('user').value === "henriquevieiraneto97@gmail.com" && document.getElementById('pass').value === "@Hvn2009") inicializarDados();
-            else alert("Acesso negado!");
+            const u = document.getElementById('user').value;
+            const p = document.getElementById('pass').value;
+            if (u === "admin" && p === "admin") {
+                status("🔓 Acesso autorizado!", "#28a745");
+                inicializarDados();
+            } else {
+                status("❌ Credenciais incorretas!", "#dc3545");
+            }
         }
 
         async function inicializarDados() {
-            let t = localStorage.getItem('gh_token') || prompt("Insira seu GitHub Token:");
+            let t = localStorage.getItem('gh_token') || prompt("🔐 Sistema requer GitHub Token para conexão:");
             if(t) localStorage.setItem('gh_token', t); else return;
 
             try {
@@ -109,62 +148,90 @@
                 document.getElementById('login-screen').classList.add('hidden');
                 document.getElementById('main-screen').classList.remove('hidden');
                 render();
-            } catch (e) { alert("Erro ao carregar dados."); }
+            } catch (e) { 
+                status("⚠️ Erro de Conexão com GitHub", "#dc3545"); 
+            }
         }
 
-        function render() {
+        function render(filtro = "") {
             const cont = document.getElementById('lista-edicao');
             cont.innerHTML = "";
+            let count = 0;
+
             db.mediuns.forEach((m, i) => {
+                if (filtro && !m.nome.toLowerCase().includes(filtro) && !m.entidade.toLowerCase().includes(filtro)) return;
+                
+                count++;
                 const item = document.createElement('div');
                 item.className = 'admin-box card-edit';
                 item.innerHTML = `
-                    <button class="btn btn-del" onclick="remover(${i})">REMOVER</button>
+                    <button class="btn btn-del" onclick="remover(${i})"><i class="fas fa-trash"></i></button>
                     
                     <div class="foto-container">
-                        <img src="${m.foto}" class="preview-img" id="prev-${i}" onerror="this.src='img/default.jpg'">
+                        <img src="${m.foto || 'img/default.jpg'}" class="preview-img" id="prev-${i}" onerror="this.src='img/default.jpg'">
                         <div class="drop-zone" ondrop="handleDrop(event, ${i})" ondragover="event.preventDefault()">
-                             Arraste a foto de perfil aqui
+                             <i class="fas fa-camera"></i> Arraste uma imagem aqui
                         </div>
                     </div>
 
                     <div class="form-grid">
                         <div>
-                            <label>Nome Completo</label>
-                            <input type="text" value="${m.nome || ''}" oninput="db.mediuns[${i}].nome = this.value.toUpperCase()">
+                            <label>Nome do Médium</label>
+                            <input type="text" value="${m.nome || ''}" placeholder="NOME COMPLETO" oninput="db.mediuns[${i}].nome = this.value.toUpperCase(); salvarCache()">
                         </div>
                         <div>
                             <label>Orixá de Frente</label>
-                            <select onchange="db.mediuns[${i}].orixa = this.value">
-                                <option value="">Selecione...</option>
+                            <select onchange="db.mediuns[${i}].orixa = this.value; salvarCache()">
+                                <option value="">Selecione o Orixá...</option>
                                 ${LISTAS.orixas.map(o => `<option value="${o}" ${m.orixa === o ? 'selected' : ''}>${o}</option>`).join('')}
                             </select>
                         </div>
                         <div>
-                            <label>Cargo</label>
-                            <select onchange="toggleOutros(this, ${i}, 'cargo')">
+                            <label>Cargo na Casa</label>
+                            <select onchange="toggleOutros(this, ${i}, 'cargo'); salvarCache()">
                                 ${LISTAS.cargos.map(c => `<option value="${c}" ${m.cargo === c ? 'selected' : ''}>${c}</option>`).join('')}
                             </select>
                             <input type="text" id="outros-cargo-${i}" class="${LISTAS.cargos.includes(m.cargo) ? 'hidden' : ''}" 
                                    value="${LISTAS.cargos.includes(m.cargo) ? '' : m.cargo}"
-                                   placeholder="Digite o cargo..." oninput="db.mediuns[${i}].cargo = this.value">
+                                   placeholder="Qual cargo?" oninput="db.mediuns[${i}].cargo = this.value; salvarCache()">
                         </div>
                         <div>
-                            <label>Linha da Entidade</label>
-                            <select onchange="db.mediuns[${i}].linha = this.value">
+                            <label>Linha de Atuação</label>
+                            <select onchange="db.mediuns[${i}].linha = this.value; salvarCache()">
                                 ${LISTAS.linhas.map(l => `<option value="${l}" ${m.linha === l ? 'selected' : ''}>${l}</option>`).join('')}
                             </select>
                         </div>
                     </div>
 
-                    <label>Nome da Entidade Principal</label>
-                    <input type="text" value="${m.entidade || ''}" placeholder="Ex: Pai Joaquim de Angola" oninput="db.mediuns[${i}].entidade = this.value">
+                    <div style="margin-top:15px;">
+                        <label>Entidade de Frente (Nome)</label>
+                        <input type="text" value="${m.entidade || ''}" placeholder="Ex: Caboclo Sete Flechas" oninput="db.mediuns[${i}].entidade = this.value; salvarCache()">
+                    </div>
                     
-                    <label>URL da Foto (ou arraste acima)</label>
-                    <input type="text" id="input-foto-${i}" value="${m.foto}" oninput="db.mediuns[${i}].foto = this.value; document.getElementById('prev-${i}').src = this.value">
+                    <label>Link Direto da Imagem</label>
+                    <input type="text" id="input-foto-${i}" value="${m.foto}" placeholder="https://exemplo.com/foto.jpg" oninput="db.mediuns[${i}].foto = this.value; document.getElementById('prev-${i}').src = this.value; salvarCache()">
                 `;
                 cont.appendChild(item);
             });
+            atualizarStats(count);
+        }
+
+        function filtrarCards() {
+            const val = document.getElementById('filterInput').value.toLowerCase();
+            render(val);
+        }
+
+        function atualizarStats(visiveis) {
+            const bar = document.getElementById('stats-bar');
+            bar.innerHTML = `
+                <span class="stats-item"><b>${db.mediuns.length}</b> Membros no total</span>
+                <span class="stats-item"><b>${visiveis}</b> Encontrados</span>
+                <span class="stats-item">Última edição: ${new Date().toLocaleTimeString()}</span>
+            `;
+        }
+
+        function salvarCache() {
+            localStorage.setItem('admin_draft', JSON.stringify(db));
         }
 
         function toggleOutros(select, i, campo) {
@@ -188,34 +255,68 @@
                 db.mediuns[index].foto = url;
                 document.getElementById(`input-foto-${index}`).value = url;
                 document.getElementById(`prev-${index}`).src = url;
-                status("📸 Foto capturada!");
+                salvarCache();
+                status("📸 Foto atualizada no rascunho!");
             }
         }
 
         function adicionarNovo() {
-            db.mediuns.unshift({ nome: "", cargo: "Médium de Corrente", entidade: "", linha: "Desconhecida", orixa: "", foto: "img/default.jpg" });
+            db.mediuns.unshift({ nome: "", cargo: "Médium de Corrente", entidade: "", linha: "Desconhecida", orixa: "Desconhecido", foto: "img/default.jpg" });
             render();
-            status("✨ Adicionado novo card no topo");
+            salvarCache();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            status("✨ Novo registro iniciado no topo", "#00d4ff");
         }
 
-        function remover(i) { if(confirm("Excluir membro?")) { db.mediuns.splice(i, 1); render(); } }
+        function remover(i) {
+            if(confirm("❗ Deseja apagar este registro permanentemente?")) {
+                db.mediuns.splice(i, 1);
+                render();
+                salvarCache();
+                status("🗑️ Registro removido com sucesso", "#dc3545");
+            }
+        }
 
         async function enviarParaGithub() {
             const t = localStorage.getItem('gh_token');
-            status("🚀 Gravando alterações...");
+            if(!db.mediuns[0].nome && db.mediuns.length > 0) {
+                alert("❌ Erro: O primeiro médium da lista está sem nome!");
+                return;
+            }
+            
+            status("🚀 Enviando dados para o servidor...");
             try {
-                const novoConteudo = btoa(unescape(encodeURIComponent(JSON.stringify(db, null, 2))));
+                const jsonString = JSON.stringify(db, null, 2);
+                const novoConteudo = btoa(unescape(encodeURIComponent(jsonString)));
+                
                 const res = await fetch(`https://api.github.com/repos/${REPO_INFO.owner}/${REPO_INFO.repo}/contents/${REPO_INFO.path}`, {
                     method: 'PUT',
                     headers: { 'Authorization': `token ${t}`, 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: "Gestão Master: Atualização via Painel", content: novoConteudo, sha: currentSha })
+                    body: JSON.stringify({ 
+                        message: `Painel Master: Atualização Geral [${db.mediuns.length} membros]`, 
+                        content: novoConteudo, 
+                        sha: currentSha 
+                    })
                 });
+
                 if(res.ok) { 
                     const data = await res.json();
                     currentSha = data.content.sha;
-                    status("✅ SITE ATUALIZADO COM SUCESSO!"); 
+                    localStorage.removeItem('admin_draft');
+                    status("✅ SITE ATUALIZADO COM SUCESSO!", "#28a745"); 
+                } else {
+                    const errorMsg = await res.json();
+                    status("❌ Falha: " + errorMsg.message, "#dc3545");
                 }
-            } catch (e) { alert("Erro ao salvar."); }
+            } catch (e) { 
+                status("❌ Erro fatal de processamento", "#dc3545"); 
+            }
+        }
+
+        // Recuperar rascunho se existir
+        window.onload = () => {
+            const draft = localStorage.getItem('admin_draft');
+            if(draft) console.log("Rascunho local detectado.");
         }
     </script>
 </body>

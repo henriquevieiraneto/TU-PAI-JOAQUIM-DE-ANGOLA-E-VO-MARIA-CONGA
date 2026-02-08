@@ -3,40 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Corrente Mediúnica | TU Pai Joaquim</title>
+    <title>Corpo Mediúnico | TU Pai Joaquim</title>
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-neon: #00d4ff;
+            --gold: #ffcc00;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #fff;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+        }
+
+        /* HEADER COMPACTO */
+        header {
+            text-align: center;
+            padding: 20px 10px; /* Espaço reduzido */
+        }
+
+        header h1 {
+            color: var(--primary-neon);
+            font-size: 1.6rem; /* Fonte menor */
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        /* BOTÃO VOLTAR REFINADO */
+        .btn-nav {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            background-color: rgba(0, 212, 255, 0.15);
+            border: 1px solid var(--primary-neon);
+            color: #ffffff !important;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 50px;
+            transition: 0.3s;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            margin-top: 10px;
+        }
+
+        .btn-nav:hover {
+            background-color: var(--primary-neon);
+            color: #000 !important;
+            box-shadow: 0 0 15px var(--primary-neon);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* GRID RESPONSIVA COMPACTA */
+        .mediuns-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Mais colunas por linha */
+            gap: 15px;
+            padding: 15px 0;
+        }
+
+        /* CARDS MENORES */
+        .medium-card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 15px; /* Reduzido de 30px */
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        /* IMAGEM EM TAMANHO EQUILIBRADO */
+        .medium-card img {
+            width: 100px; /* Tamanho ideal para não dominar a tela */
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-neon);
+            margin-bottom: 10px;
+        }
+
+        .medium-card h3 {
+            color: var(--gold);
+            font-size: 1rem; /* Fonte menor */
+            margin: 5px 0;
+        }
+
+        .medium-card .cargo {
+            background: rgba(255,255,255,0.1);
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            display: inline-block;
+            margin-bottom: 8px;
+            color: #eee;
+        }
+
+        .medium-card p {
+            font-size: 0.8rem;
+            margin: 2px 0;
+            color: #bbb;
+        }
+
+        .detalhes-entidade {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.75rem;
+            color: #777;
+        }
+
+        @media (max-width: 480px) {
+            .mediuns-grid { grid-template-columns: 1fr 1fr; } /* Dois por linha no celular */
+            .medium-card { padding: 10px; }
+            .medium-card img { width: 80px; height: 80px; }
+            header h1 { font-size: 1.3rem; }
+        }
+    </style>
 </head>
 <body>
+
     <header>
-        <nav class="nav-container">
-            <a href="../index.html" class="btn-back-home">
-                <i class="fas fa-arrow-left"></i> <span>Voltar ao Início</span>
+        <h1>Corpo Mediúnico</h1>
+        <div>
+            <a href="../index.html" class="btn-nav">
+                <i class="fas fa-chevron-left"></i> VOLTAR
             </a>
-
-            <h1>CORPO MEDIÚNICO</h1>
-
-            <a href="../admin.html" class="btn-admin-access" title="Acesso Restrito">
-                <i class="fas fa-cog"></i>
-            </a>
-        </nav>
+        </div>
     </header>
 
     <main class="container">
-        <section style="text-align: center; margin-bottom: 20px; opacity: 0.8;">
-            <p>União, Fé e Caridade: Os trabalhadores de nossa casa.</p>
-        </section>
-
         <div id="lista-mediuns" class="mediuns-grid">
-            <div class="loading">
-                <i class="fas fa-circle-notch fa-spin"></i> Sincronizando com o terreiro...
             </div>
-        </div>
     </main>
-
-    <footer style="text-align: center; padding: 40px; opacity: 0.5; font-size: 0.8rem;">
-        <p>&copy; 2026 TU Pai Joaquim de Angola e Vó Maria Conga</p>
-    </footer>
 
     <script src="../script.js"></script>
 </body>
