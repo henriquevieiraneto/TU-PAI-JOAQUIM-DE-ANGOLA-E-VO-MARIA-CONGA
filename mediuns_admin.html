@@ -6,34 +6,161 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Rajdhani:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #00d4ff; --bg: #000000; }
-        body { font-family: 'Rajdhani', sans-serif; background: var(--bg); color: #fff; margin: 0; padding-bottom: 50px; }
-        .header { position: sticky; top: 0; z-index: 100; background: #000; padding: 15px; border-bottom: 2px solid var(--primary); display: flex; align-items: center; gap: 15px; }
-        .search-bar { flex-grow: 1; position: relative; }
-        .search-bar i { position: absolute; left: 15px; top: 12px; color: var(--primary); }
-        input#search { width: 100%; padding: 12px 45px; background: #0a0a0a; border: 1px solid #333; color: #fff; border-radius: 30px; outline: none; }
-        .nav-tabs { display: flex; justify-content: center; gap: 10px; padding: 20px; background: #050505; }
-        .tab { padding: 10px 25px; border: 1px solid #333; color: #888; cursor: pointer; font-family: 'Orbitron'; font-size: 0.7rem; border-radius: 5px; text-decoration: none; }
-        .tab.active { border-color: var(--primary); color: var(--primary); }
-        .container { max-width: 1000px; margin: 20px auto; padding: 0 20px; }
-        .admin-box { background: #0a0a0a; border-radius: 12px; padding: 25px; margin-bottom: 20px; border: 1px solid #222; border-left: 4px solid var(--primary); position: relative; }
-        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
-        label { color: var(--primary); font-size: 0.7rem; text-transform: uppercase; font-weight: bold; display: block; margin-bottom: 5px; }
-        input { width: 100%; padding: 10px; background: #000; border: 1px solid #333; color: #fff; border-radius: 5px; }
-        .btn { padding: 12px 20px; border-radius: 8px; cursor: pointer; font-family: 'Orbitron'; font-size: 0.7rem; border: none; display: flex; align-items: center; gap: 8px; }
-        .btn-save { background: #28a745; color: #fff; }
-        .btn-add { border: 1px solid var(--primary); color: var(--primary); background: transparent; }
-        .btn-back { background: #111; color: #fff; text-decoration: none; border: 1px solid #222; }
+        :root { 
+            --primary: #00d4ff; 
+            --bg: #050505; 
+            --card-bg: #0d0d0d;
+            --danger: #ff4444;
+            --success: #00ff88;
+        }
+
+        body { 
+            font-family: 'Rajdhani', sans-serif; 
+            background: var(--bg); 
+            color: #fff; 
+            margin: 0; 
+            padding-bottom: 100px;
+            overflow-x: hidden;
+        }
+
+        /* HEADER SEM PESQUISA */
+        .header { 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+            background: rgba(0, 0, 0, 0.9); 
+            backdrop-filter: blur(10px);
+            padding: 20px; 
+            border-bottom: 2px solid var(--primary); 
+            display: flex; 
+            justify-content: space-between;
+            align-items: center; 
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+        }
+
+        .header-title {
+            font-family: 'Orbitron';
+            color: var(--primary);
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+        }
+
+        .nav-tabs { 
+            display: flex; 
+            justify-content: center; 
+            gap: 15px; 
+            padding: 15px; 
+            background: #000; 
+        }
+
+        .tab { 
+            padding: 8px 20px; 
+            border: 1px solid #222; 
+            color: #666; 
+            cursor: pointer; 
+            font-family: 'Orbitron'; 
+            font-size: 0.7rem; 
+            border-radius: 4px; 
+            text-decoration: none; 
+            transition: 0.3s;
+        }
+
+        .tab:hover, .tab.active { border-color: var(--primary); color: var(--primary); }
+
+        .container { max-width: 900px; margin: 30px auto; padding: 0 20px; }
+
+        /* CARDS ESTILIZADOS */
+        .admin-box { 
+            background: var(--card-bg); 
+            border-radius: 15px; 
+            padding: 25px; 
+            margin-bottom: 25px; 
+            border: 1px solid #1a1a1a; 
+            border-left: 5px solid var(--primary); 
+            transition: transform 0.2s;
+        }
+
+        .admin-box:hover { transform: scale(1.01); border-color: #333; }
+
+        .form-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+            gap: 20px; 
+        }
+
+        label { 
+            color: var(--primary); 
+            font-size: 0.75rem; 
+            text-transform: uppercase; 
+            font-weight: bold; 
+            margin-bottom: 8px; 
+            display: block;
+            letter-spacing: 1px;
+        }
+
+        input { 
+            width: 100%; 
+            padding: 12px; 
+            background: #000; 
+            border: 1px solid #222; 
+            color: #fff; 
+            border-radius: 8px; 
+            box-sizing: border-box;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(0, 212, 255, 0.1); }
+
+        /* BOTÕES */
+        .btn { 
+            padding: 12px 25px; 
+            border-radius: 30px; 
+            cursor: pointer; 
+            font-family: 'Orbitron'; 
+            font-size: 0.75rem; 
+            border: none; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+
+        .btn-save { background: var(--success); color: #000; font-weight: bold; }
+        .btn-save:hover { box-shadow: 0 0 20px rgba(0, 255, 136, 0.4); transform: translateY(-2px); }
+
+        .btn-add { background: transparent; border: 1px solid var(--primary); color: var(--primary); }
+        .btn-add:hover { background: var(--primary); color: #000; }
+
+        .btn-remove { 
+            background: transparent; 
+            color: var(--danger); 
+            border: 1px solid var(--danger); 
+            margin-top: 20px;
+            font-size: 0.6rem;
+            padding: 5px 15px;
+        }
+
+        .btn-remove:hover { background: var(--danger); color: #fff; }
+
+        /* RODAPÉ FIXO DE AÇÕES */
+        .footer-actions {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
     </style>
 </head>
 <body>
+
     <div class="header">
-        <a href="index.html" class="btn btn-back"><i class="fas fa-home"></i> SITE</a>
-        <div class="search-bar">
-            <i class="fas fa-search"></i>
-            <input type="text" id="search" placeholder="PESQUISAR MÉDIUM..." oninput="render()">
-        </div>
-        <button class="btn btn-save" onclick="salvar()"><i class="fas fa-save"></i> SALVAR ALTERAÇÕES</button>
+        <div class="header-title">PAI JOAQUIM <span style="color:white">| ADMIN</span></div>
+        <a href="index.html" style="color: #666; text-decoration: none; font-size: 0.8rem;"><i class="fas fa-external-link-alt"></i> VER SITE</a>
     </div>
 
     <div class="nav-tabs">
@@ -41,64 +168,128 @@
     </div>
 
     <div class="container">
-        <div class="actions" style="display:flex; justify-content:space-between; margin-bottom:20px;">
-            <h2 style="font-family:'Orbitron'; font-size:1rem;">LISTA DE MÉDIUNS</h2>
-            <button class="btn btn-add" onclick="novo()">+ ADICIONAR</button>
-        </div>
-        <div id="lista-mediuns"></div>
+        <div id="lista-mediuns">
+            </div>
+    </div>
+
+    <div class="footer-actions">
+        <button class="btn btn-add" onclick="novo()">
+            <i class="fas fa-plus"></i> NOVO MÉDIUM
+        </button>
+        <button class="btn btn-save" onclick="salvar()">
+            <i class="fas fa-cloud-upload-alt"></i> SALVAR NO GITHUB
+        </button>
     </div>
 
     <script>
-        // CONFIGURAÇÃO TÉCNICA - COLOQUE SEU TOKEN AQUI
-        const GH_TOKEN = "COLOQUE_SEU_TOKEN_AQUI"; 
-        const REPO = { owner: 'henriquevieiraneto', name: 'TU-PAI-JOAQUIM-DE-ANGOLA-E-VO-MARIA-CONGA', file: 'dados.json' };
+        // CONFIGURAÇÃO - COLOQUE SEU TOKEN AQUI
+        const GH_TOKEN = "SEU_TOKEN_AQUI"; 
+        const REPO = { 
+            owner: 'henriquevieiraneto', 
+            name: 'TU-PAI-JOAQUIM-DE-ANGOLA-E-VO-MARIA-CONGA', 
+            file: 'dados.json' 
+        };
         
         let db = { mediuns: [], calendario: [] };
         let sha = "";
 
         async function carregar() {
-            if(localStorage.getItem('admin_auth') !== 'true') window.location.href = 'acesso.html';
-            const res = await fetch(`https://api.github.com/repos/${REPO.owner}/${REPO.name}/contents/${REPO.file}`);
-            const data = await res.json();
-            sha = data.sha;
-            db = JSON.parse(decodeURIComponent(escape(window.atob(data.content))));
-            render();
+            try {
+                const res = await fetch(`https://api.github.com/repos/${REPO.owner}/${REPO.name}/contents/${REPO.file}`);
+                const data = await res.json();
+                sha = data.sha;
+                // Decodificação robusta para caracteres especiais (acentos)
+                db = JSON.parse(decodeURIComponent(escape(window.atob(data.content))));
+                render();
+            } catch (error) {
+                alert("Erro ao carregar dados do GitHub. Verifique o Token ou o Repositório.");
+            }
         }
 
         function render() {
             const list = document.getElementById('lista-mediuns');
-            const term = document.getElementById('search').value.toLowerCase();
             list.innerHTML = "";
+            
             db.mediuns.forEach((m, i) => {
-                if(term && !m.nome.toLowerCase().includes(term)) return;
                 const div = document.createElement('div');
                 div.className = 'admin-box';
                 div.innerHTML = `
                     <div class="form-grid">
-                        <div><label>Nome</label><input type="text" value="${m.nome}" oninput="db.mediuns[${i}].nome=this.value"></div>
-                        <div><label>Orixá</label><input type="text" value="${m.orixa}" oninput="db.mediuns[${i}].orixa=this.value"></div>
-                        <div><label>Cargo</label><input type="text" value="${m.cargo}" oninput="db.mediuns[${i}].cargo=this.value"></div>
-                        <div><label>Entidade</label><input type="text" value="${m.entidade}" oninput="db.mediuns[${i}].entidade=this.value"></div>
+                        <div>
+                            <label>Nome Completo</label>
+                            <input type="text" value="${m.nome}" oninput="db.mediuns[${i}].nome=this.value.toUpperCase()">
+                        </div>
+                        <div>
+                            <label>Orixá Regente</label>
+                            <input type="text" value="${m.orixa}" oninput="db.mediuns[${i}].orixa=this.value.toUpperCase()">
+                        </div>
+                        <div>
+                            <label>Cargo / Função</label>
+                            <input type="text" value="${m.cargo}" oninput="db.mediuns[${i}].cargo=this.value.toUpperCase()">
+                        </div>
+                        <div>
+                            <label>Entidade</label>
+                            <input type="text" value="${m.entidade}" oninput="db.mediuns[${i}].entidade=this.value.toUpperCase()">
+                        </div>
                     </div>
-                    <div style="margin-top:15px"><label>URL da Foto</label><input type="text" value="${m.foto}" oninput="db.mediuns[${i}].foto=this.value"></div>
-                    <button style="color:red; background:none; border:none; margin-top:10px; cursor:pointer" onclick="remover(${i})">Remover Médium</button>
+                    <div style="margin-top:20px">
+                        <label>Link da Foto (URL)</label>
+                        <input type="text" value="${m.foto}" oninput="db.mediuns[${i}].foto=this.value">
+                    </div>
+                    <button class="btn btn-remove" onclick="remover(${i})">
+                        <i class="fas fa-trash"></i> EXCLUIR MÉDIUM
+                    </button>
                 `;
                 list.appendChild(div);
             });
         }
 
-        function novo() { db.mediuns.unshift({nome:"", orixa:"", cargo:"", entidade:"", foto:""}); render(); }
-        function remover(i) { if(confirm("Apagar?")) { db.mediuns.splice(i,1); render(); } }
+        function novo() { 
+            db.mediuns.unshift({nome:"", orixa:"", cargo:"", entidade:"", foto:""}); 
+            render(); 
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function remover(i) { 
+            if(confirm("Deseja realmente excluir este médium?")) { 
+                db.mediuns.splice(i,1); 
+                render(); 
+            } 
+        }
 
         async function salvar() {
-            const content = btoa(unescape(encodeURIComponent(JSON.stringify(db, null, 2))));
-            const res = await fetch(`https://api.github.com/repos/${REPO.owner}/${REPO.name}/contents/${REPO.file}`, {
-                method: 'PUT',
-                headers: { 'Authorization': `token ${GH_TOKEN}` },
-                body: JSON.stringify({ message: "Update", content, sha })
-            });
-            if(res.ok) alert("Salvo com sucesso!");
+            const btn = document.querySelector('.btn-save');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> SALVANDO...';
+            
+            try {
+                const content = btoa(unescape(encodeURIComponent(JSON.stringify(db, null, 2))));
+                const res = await fetch(`https://api.github.com/repos/${REPO.owner}/${REPO.name}/contents/${REPO.file}`, {
+                    method: 'PUT',
+                    headers: { 
+                        'Authorization': `token ${GH_TOKEN}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        message: "Atualização via Master Control", 
+                        content, 
+                        sha 
+                    })
+                });
+
+                if(res.ok) {
+                    const jsonResult = await res.json();
+                    sha = jsonResult.content.sha; // Atualiza o SHA para permitir múltiplos salvamentos
+                    alert("Dados sincronizados com sucesso no GitHub!");
+                } else {
+                    throw new Error("Falha na resposta do servidor.");
+                }
+            } catch (error) {
+                alert("Erro ao salvar: Verifique sua conexão ou validade do Token.");
+            } finally {
+                btn.innerHTML = '<i class="fas fa-save"></i> SALVAR NO GITHUB';
+            }
         }
+
         carregar();
     </script>
 </body>
