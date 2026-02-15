@@ -8,5 +8,12 @@
       "foto": ""
     }
   ],
-  "calendario": []
+  "calendario": [
+    {
+      "data": "2026-02-21",
+      "evento": "Homenagem para Oxóssi e Iemanjá",
+      "horario": "19:30",
+      "status": "Confirmado"
+    }
+  ]
 }
