@@ -2,116 +2,200 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Corpo Mediúnico | TU Pai Joaquim</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Rajdhani:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #00d4ff; --bg: #000; }
+        :root { 
+            --primary: #00d4ff; 
+            --bg: #000000; 
+            --card-bg: #0a0a0a;
+        }
+
         body { 
             font-family: 'Rajdhani', sans-serif; 
             background: var(--bg); 
             color: #fff; 
             margin: 0; 
-            text-align: center; 
+            padding-bottom: 50px; 
         }
-        h1 { 
+
+        /* Cabeçalho Estilizado */
+        .header { 
+            background: #000; 
+            padding: 20px; 
+            border-bottom: 2px solid var(--primary); 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 { 
             font-family: 'Orbitron'; 
-            color: var(--primary); 
-            margin-top: 30px; 
-            text-transform: uppercase;
-        }
-        .btn-voltar {
-            background: transparent;
-            border: 1px solid var(--primary);
+            font-size: 1.2rem; 
+            margin: 0; 
             color: var(--primary);
-            padding: 8px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .btn-voltar { 
+            text-decoration: none; 
+            color: #fff; 
+            border: 1px solid #333; 
+            padding: 8px 15px; 
+            border-radius: 5px; 
             font-size: 0.8rem;
-            display: inline-block;
-            margin-bottom: 40px;
-        }
-        /* Grid de Cards */
-        .grid-mediuns {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .card {
-            background: #0a0a0a;
-            border: 1px solid #1a1a1a;
-            border-bottom: 3px solid var(--primary);
-            border-radius: 10px;
-            padding: 20px;
             transition: 0.3s;
         }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0, 212, 255, 0.2); }
-        .foto {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            border: 2px solid var(--primary);
-            margin-bottom: 15px;
-            object-fit: cover;
+
+        .btn-voltar:hover { border-color: var(--primary); color: var(--primary); }
+
+        /* Grid de Cards */
+        .container { 
+            max-width: 1100px; 
+            margin: 40px auto; 
+            padding: 0 20px; 
         }
-        .nome { font-family: 'Orbitron'; font-size: 1rem; color: var(--primary); margin: 10px 0; }
-        .info { font-size: 0.8rem; color: #888; text-transform: uppercase; margin: 3px 0; }
-        .entidade { color: #fff; font-weight: bold; margin-top: 10px; border-top: 1px solid #222; padding-top: 10px; }
+
+        .grid-mediuns { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 25px; 
+        }
+
+        /* Card Individual */
+        .card { 
+            background: var(--card-bg); 
+            border: 1px solid #1a1a1a; 
+            border-radius: 15px; 
+            padding: 25px; 
+            text-align: center; 
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: var(--primary);
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .card:hover { 
+            transform: translateY(-10px); 
+            border-color: var(--primary);
+            box-shadow: 0 10px 20px rgba(0, 212, 255, 0.1); 
+        }
+
+        .foto { 
+            width: 120px; 
+            height: 120px; 
+            border-radius: 50%; 
+            border: 3px solid var(--primary); 
+            margin: 0 auto 15px; 
+            object-fit: cover;
+            display: block;
+            background: #111;
+        }
+
+        .nome { 
+            font-family: 'Orbitron'; 
+            color: var(--primary); 
+            font-size: 1.1rem; 
+            margin-bottom: 5px; 
+            text-transform: uppercase;
+        }
+
+        .cargo { 
+            color: #888; 
+            font-size: 0.8rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .entidade { 
+            background: rgba(0, 212, 255, 0.1); 
+            padding: 10px; 
+            border-radius: 8px; 
+            font-weight: bold; 
+            font-size: 0.9rem;
+        }
+
+        .orixa {
+            display: block;
+            margin-top: 10px;
+            font-size: 0.75rem;
+            color: var(--primary);
+            opacity: 0.8;
+        }
+
+        #loading { text-align: center; color: var(--primary); font-family: 'Orbitron'; margin-top: 50px; }
     </style>
 </head>
 <body>
 
-    <h1>CORPO MEDIÚNICO</h1>
-    <a href="../index.html" class="btn-voltar"> < VOLTAR</a>
+    <div class="header">
+        <a href="../index.html" class="btn-voltar"><i class="fas fa-arrow-left"></i> VOLTAR</a>
+        <h1>CORPO MEDIÚNICO</h1>
+        <div style="width: 80px;"></div> </div>
 
-    <div id="display-mediuns" class="grid-mediuns">
-        </div>
+    <div class="container">
+        <div id="loading"><i class="fas fa-spinner fa-spin"></i> A ACESSAR DADOS...</div>
+        <div id="display-mediuns" class="grid-mediuns"></div>
+    </div>
 
     <script>
-        // URL do seu arquivo no GitHub (Caminho Relativo)
-        const URL_DADOS = "../dados.json";
+        // URL RAW do seu GitHub - Funciona sem Token para leitura pública
+        const URL_DADOS = "https://raw.githubusercontent.com/henriquevieiraneto/TU-PAI-JOAQUIM-DE-ANGOLA-E-VO-MARIA-CONGA/main/dados.json";
 
         async function carregarCorpoMediunico() {
             const container = document.getElementById('display-mediuns');
+            const loading = document.getElementById('loading');
             
             try {
-                // Busca o arquivo dados.json
                 const response = await fetch(URL_DADOS);
+                if (!response.ok) throw new Error("Erro ao carregar");
+                
                 const data = await response.json();
                 
-                // O seu JSON tem a estrutura { "mediuns": [...] }
+                // Pega a lista dentro da chave 'mediuns'
                 const lista = data.mediuns;
 
-                if (lista.length === 0) {
-                    container.innerHTML = "<p>Nenhum médium cadastrado no momento.</p>";
+                loading.style.display = 'none';
+
+                if (!lista || lista.length === 0) {
+                    container.innerHTML = "<p>Nenhum médium encontrado.</p>";
                     return;
                 }
 
-                container.innerHTML = ""; // Limpa o carregando
-
                 lista.forEach(m => {
-                    const fotoUrl = m.foto || "https://via.placeholder.com/150";
+                    const fotoUrl = m.foto && m.foto.trim() !== "" ? m.foto : "https://via.placeholder.com/150/000000/00d4ff?text=MÉDIUM";
+                    
                     container.innerHTML += `
                         <div class="card">
                             <img src="${fotoUrl}" class="foto" alt="${m.nome}">
                             <div class="nome">${m.nome}</div>
-                            <div class="info">Orixá: ${m.orixa}</div>
-                            <div class="info">Cargo: ${m.cargo}</div>
+                            <div class="cargo">${m.cargo}</div>
                             <div class="entidade">${m.entidade}</div>
+                            <span class="orixa"><i class="fas fa-sun"></i> Filhos de ${m.orixa}</span>
                         </div>
                     `;
                 });
 
             } catch (error) {
-                console.error("Erro ao carregar médiuns:", error);
-                container.innerHTML = "<p style='color:red'>Erro ao carregar dados. Verifique a conexão.</p>";
+                console.error("Erro:", error);
+                loading.innerHTML = "<p style='color:red'>Erro ao carregar o Corpo Mediúnico. Tente novamente mais tarde.</p>";
             }
         }
 
-        // Inicia a busca assim que a página abre
+        // Inicia a execução
         carregarCorpoMediunico();
     </script>
 </body>
