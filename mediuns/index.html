@@ -2,151 +2,117 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Corpo Mediúnico | TU Pai Joaquim</title>
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Rajdhani:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-neon: #00d4ff;
-            --gold: #ffcc00;
-            --glass: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
+        :root { --primary: #00d4ff; --bg: #000; }
+        body { 
+            font-family: 'Rajdhani', sans-serif; 
+            background: var(--bg); 
+            color: #fff; 
+            margin: 0; 
+            text-align: center; 
         }
-
-        body {
-            background-color: #0a0a0a;
-            color: #fff;
-            font-family: 'Segoe UI', sans-serif;
-            margin: 0;
-        }
-
-        /* HEADER COMPACTO */
-        header {
-            text-align: center;
-            padding: 20px 10px; /* Espaço reduzido */
-        }
-
-        header h1 {
-            color: var(--primary-neon);
-            font-size: 1.6rem; /* Fonte menor */
+        h1 { 
+            font-family: 'Orbitron'; 
+            color: var(--primary); 
+            margin-top: 30px; 
             text-transform: uppercase;
-            margin: 0;
         }
-
-        /* BOTÃO VOLTAR REFINADO */
-        .btn-nav {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 18px;
-            background-color: rgba(0, 212, 255, 0.15);
-            border: 1px solid var(--primary-neon);
-            color: #ffffff !important;
+        .btn-voltar {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
             text-decoration: none;
-            font-weight: bold;
-            border-radius: 50px;
-            transition: 0.3s;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            margin-top: 10px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 40px;
         }
-
-        .btn-nav:hover {
-            background-color: var(--primary-neon);
-            color: #000 !important;
-            box-shadow: 0 0 15px var(--primary-neon);
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-
-        /* GRID RESPONSIVA COMPACTA */
-        .mediuns-grid {
+        /* Grid de Cards */
+        .grid-mediuns {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Mais colunas por linha */
-            gap: 15px;
-            padding: 15px 0;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
         }
-
-        /* CARDS MENORES */
-        .medium-card {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-            border-radius: 15px;
-            padding: 15px; /* Reduzido de 30px */
-            text-align: center;
+        .card {
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            border-bottom: 3px solid var(--primary);
+            border-radius: 10px;
+            padding: 20px;
             transition: 0.3s;
         }
-
-        /* IMAGEM EM TAMANHO EQUILIBRADO */
-        .medium-card img {
-            width: 100px; /* Tamanho ideal para não dominar a tela */
+        .card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0, 212, 255, 0.2); }
+        .foto {
+            width: 100px;
             height: 100px;
             border-radius: 50%;
+            border: 2px solid var(--primary);
+            margin-bottom: 15px;
             object-fit: cover;
-            border: 2px solid var(--primary-neon);
-            margin-bottom: 10px;
         }
-
-        .medium-card h3 {
-            color: var(--gold);
-            font-size: 1rem; /* Fonte menor */
-            margin: 5px 0;
-        }
-
-        .medium-card .cargo {
-            background: rgba(255,255,255,0.1);
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 0.7rem;
-            display: inline-block;
-            margin-bottom: 8px;
-            color: #eee;
-        }
-
-        .medium-card p {
-            font-size: 0.8rem;
-            margin: 2px 0;
-            color: #bbb;
-        }
-
-        .detalhes-entidade {
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            font-size: 0.75rem;
-            color: #777;
-        }
-
-        @media (max-width: 480px) {
-            .mediuns-grid { grid-template-columns: 1fr 1fr; } /* Dois por linha no celular */
-            .medium-card { padding: 10px; }
-            .medium-card img { width: 80px; height: 80px; }
-            header h1 { font-size: 1.3rem; }
-        }
+        .nome { font-family: 'Orbitron'; font-size: 1rem; color: var(--primary); margin: 10px 0; }
+        .info { font-size: 0.8rem; color: #888; text-transform: uppercase; margin: 3px 0; }
+        .entidade { color: #fff; font-weight: bold; margin-top: 10px; border-top: 1px solid #222; padding-top: 10px; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Corpo Mediúnico</h1>
-        <div>
-            <a href="../index.html" class="btn-nav">
-                <i class="fas fa-chevron-left"></i> VOLTAR
-            </a>
+    <h1>CORPO MEDIÚNICO</h1>
+    <a href="../index.html" class="btn-voltar"> < VOLTAR</a>
+
+    <div id="display-mediuns" class="grid-mediuns">
         </div>
-    </header>
 
-    <main class="container">
-        <div id="lista-mediuns" class="mediuns-grid">
-            </div>
-    </main>
+    <script>
+        // URL do seu arquivo no GitHub (Caminho Relativo)
+        const URL_DADOS = "../dados.json";
 
-    <script src="../script.js"></script>
+        async function carregarCorpoMediunico() {
+            const container = document.getElementById('display-mediuns');
+            
+            try {
+                // Busca o arquivo dados.json
+                const response = await fetch(URL_DADOS);
+                const data = await response.json();
+                
+                // O seu JSON tem a estrutura { "mediuns": [...] }
+                const lista = data.mediuns;
+
+                if (lista.length === 0) {
+                    container.innerHTML = "<p>Nenhum médium cadastrado no momento.</p>";
+                    return;
+                }
+
+                container.innerHTML = ""; // Limpa o carregando
+
+                lista.forEach(m => {
+                    const fotoUrl = m.foto || "https://via.placeholder.com/150";
+                    container.innerHTML += `
+                        <div class="card">
+                            <img src="${fotoUrl}" class="foto" alt="${m.nome}">
+                            <div class="nome">${m.nome}</div>
+                            <div class="info">Orixá: ${m.orixa}</div>
+                            <div class="info">Cargo: ${m.cargo}</div>
+                            <div class="entidade">${m.entidade}</div>
+                        </div>
+                    `;
+                });
+
+            } catch (error) {
+                console.error("Erro ao carregar médiuns:", error);
+                container.innerHTML = "<p style='color:red'>Erro ao carregar dados. Verifique a conexão.</p>";
+            }
+        }
+
+        // Inicia a busca assim que a página abre
+        carregarCorpoMediunico();
+    </script>
 </body>
 </html>
