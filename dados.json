@@ -1,32 +1,12 @@
 {
   "mediuns": [
     {
-      "nome": "Alberto",
-      "orixa": "Omolu",
-      "entidade": "Pai Joaquim de Angola",
+      "nome": "ALBERTO",
+      "orixa": "OMOLU",
+      "cargo": "BABALORIXÁ",
+      "entidade": "PAI JOAQUIM DE ANGOLA",
       "foto": ""
-    },
-    {
-      "nome": "HENRIQUE VIEIRA NETO",
-      "cargo": "Médium de Corrente",
-      "entidade": "Desconhecida",
-      "foto": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyLDsGC4FmRX1Xm7BQqJTKQb23CIag_wfGtw&amp;s",
-      "linha": "Desconhecida",
-      "orixa": "Iansã"
     }
   ],
-  "calendario": [
-    {
-      "data": "2026-02-21",
-      "evento": "Homenagem para Iemanjá na Praia do Sambaqui",
-      "horario": "17:00",
-      "status": "Confirmado"
-    },
-    {
-      "data": "2026-02-14",
-      "evento": "Preto Velho e Santo Velho",
-      "horario": "19:00",
-      "status": "Cancelado"
-    }
-  ]
+  "calendario": []
 }
